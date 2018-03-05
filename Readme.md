@@ -1,4 +1,4 @@
-# hiraku.js - jQuery Offcanvas Menu Plugin
+# hiraku2
 
 We made jQuery plugin called hiraku.js so that more people can use Offcanvas-menu functionality which is used in a CMS we make.
 
@@ -23,9 +23,8 @@ $ npm install hiraku
 ## Setup
 
 ```html
-<link rel="stylesheet" type="text/css" href="./hiraku.css">
-<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
-<script src="./hiraku.js"></script>
+<link rel="stylesheet" type="text/css" href="./path/to/hiraku.css">
+<script src="./path/to/hiraku.js"></script>
 ```
 
 ## Option
@@ -51,7 +50,7 @@ And if you want to change the width of the Offcanvas-menu, You may want to chang
 ```
 
 ```js
-$(".offcanvas-right").hiraku({
+new Hiraku(".offcanvas-right", {
 	btn: "#offcanvas-btn-right",
 	fixedHeader: "#header",
 	direction: "right"
@@ -69,7 +68,7 @@ $(".offcanvas-right").hiraku({
 ```
 
 ```js
-$(".offcanvas-left").hiraku({
+new Hiraku(".offcanvas-left", {
 	btn: "#offcanvas-btn-left",
 	fixedHeader: "#header",
 	direction: "left"
@@ -94,14 +93,14 @@ $(".offcanvas-left").hiraku({
 ```
 
 ```js
-$(".offcanvas-left").hiraku({
+new Hiraku(".offcanvas-left", {
 	btn: "#offcanvas-btn-left",
 	fixedHeader: "#header",
 	direction: "left"
 });
 
 
-$(".offcanvas-right").hiraku({
+new Hiraku(".offcanvas-right", {
 	btn: "#offcanvas-btn-right",
 	fixedHeader: "#header",
 	direction: "right"
@@ -138,35 +137,6 @@ By default, main contents will be pressed out. But if you want to fix main conte
 
 By default, width of the Offcanvas-menu is 70% of the screen size. But you may want to change the size of the menu when using tablets. Then you can overwrite hiraku.css like below.
 
-```css
-.js-hiraku-offcanvas-body-right .js-hiraku-header-fixed {
-	margin-left: -210px;
-}
-
-.js-hiraku-offcanvas-body-left .js-hiraku-header-fixed {
-	margin-left: 210px;
-}
-
-.js-hiraku-offcanvas .js-hiraku-offcanvas-sidebar-left {
-	margin-left: -210px;
-}
- 
-.js-hiraku-offcanvas .js-hiraku-offcanvas-sidebar-right {
-	margin-right: 210px;
-}
-
-.js-hiraku-offcanvas .js-hiraku-offcanvas-sidebar {
-	width: 210px;
-}
-
-.js-hiraku-offcanvas-body-left {
-	left: 210px;
-}
-
-.js-hiraku-offcanvas-body-right {
-	right: 210px;
-}
-```
 
 ### Customize hiraku.css via hiraku.scss
 
@@ -181,8 +151,8 @@ You can change its width by changing the variable on hiraku.scss. You can also c
 
 You can download from here.
 
-[Download hiraku.js](http://github.com/appleple/hiraku/archive/master.zip)
+[Download hiraku.js](http://github.com/appleple/hiraku2/archive/master.zip)
 
 ## Github
 
-[hiraku.js on Github](http://github.com/appleple/hiraku)
+[hiraku.js on Github](http://github.com/appleple/hiraku2)
