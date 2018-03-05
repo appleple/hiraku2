@@ -42,10 +42,10 @@ And if you want to change the width of the Offcanvas-menu, You may want to chang
 ### From right side
 ```html
 <button class="hiraku-open-btn" id="offcanvas-btn-right" data-toggle-offcanvas="#js-hiraku-offcanvas-1">
-	<span class="hiraku-open-btn-line"></span>
+  <span class="hiraku-open-btn-line"></span>
 </button>
 <div class="offcanvas-right">
-	<ul><li>hogehoge</li></ul>
+  <ul><li>hogehoge</li></ul>
 </div>
 ```
 
@@ -60,10 +60,10 @@ new Hiraku(".offcanvas-right", {
 
 ```html
 <button class="hiraku-open-btn" id="offcanvas-btn-left" data-toggle-offcanvas="#js-hiraku-offcanvas-1">
-	<span class="hiraku-open-btn-line"></span>
+  <span class="hiraku-open-btn-line"></span>
 </button>
 <div class="offcanvas-left">
-	<ul><li>hogehoge</li></ul>
+  <ul><li>hogehoge</li></ul>
 </div>
 ```
 
@@ -78,25 +78,25 @@ new Hiraku(".offcanvas-left", {
 
 ```html
 <button class="hiraku-open-btn" id="offcanvas-btn-left" data-toggle-offcanvas="#js-hiraku-offcanvas-1">
-	<span class="hiraku-open-btn-line"></span>
+  <span class="hiraku-open-btn-line"></span>
 </button>
 <div class="offcanvas-left">
-	<ul><li>hogehoge</li></ul>
+  <ul><li>hogehoge</li></ul>
 </div>
 
 <button class="hiraku-open-btn" id="offcanvas-btn-right" data-toggle-offcanvas="#js-hiraku-offcanvas-1">
-	<span class="hiraku-open-btn-line"></span>
+  <span class="hiraku-open-btn-line"></span>
 </button>
 <div class="offcanvas-right">
-	<ul><li>hogehoge</li></ul>
+  <ul><li>hogehoge</li></ul>
 </div>
 ```
 
 ```js
 new Hiraku(".offcanvas-left", {
-	btn: "#offcanvas-btn-left",
-	fixedHeader: "#header",
-	direction: "left"
+  btn: "#offcanvas-btn-left",
+  fixedHeader: "#header",
+  direction: "left"
 });
 
 
@@ -116,19 +116,19 @@ By default, main contents will be pressed out. But if you want to fix main conte
 
 ```css
 .js-hiraku-offcanvas-body-right .js-hiraku-header-fixed {
-	margin-left: -70%;
+  margin-left: -70%;
 }
 
 .js-hiraku-offcanvas-body-left .js-hiraku-header-fixed {
-	margin-left: 70%;
+  margin-left: 70%;
 }
 
 .js-hiraku-offcanvas-body-right {
-	left: 0;
+  left: 0;
 }
 
 .js-hiraku-offcanvas-body-left {
-	left: 0;
+  left: 0;
 }
 ```
 
