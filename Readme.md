@@ -51,9 +51,9 @@ And if you want to change the width of the Offcanvas-menu, You may want to chang
 
 ```js
 new Hiraku(".offcanvas-right", {
-	btn: "#offcanvas-btn-right",
-	fixedHeader: "#header",
-	direction: "right"
+  btn: "#offcanvas-btn-right",
+  fixedHeader: "#header",
+  direction: "right"
 });
 ```
 ### From left side
@@ -69,9 +69,9 @@ new Hiraku(".offcanvas-right", {
 
 ```js
 new Hiraku(".offcanvas-left", {
-	btn: "#offcanvas-btn-left",
-	fixedHeader: "#header",
-	direction: "left"
+  btn: "#offcanvas-btn-left",
+  fixedHeader: "#header",
+  direction: "left"
 });
 ```
 ### From both side
@@ -101,9 +101,9 @@ new Hiraku(".offcanvas-left", {
 
 
 new Hiraku(".offcanvas-right", {
-	btn: "#offcanvas-btn-right",
-	fixedHeader: "#header",
-	direction: "right"
+  btn: "#offcanvas-btn-right",
+  fixedHeader: "#header",
+  direction: "right"
 });
 ```
 
