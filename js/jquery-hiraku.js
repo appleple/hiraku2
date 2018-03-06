@@ -1041,9 +1041,12 @@ var Hiraku = function () {
           side = this.side;
       var direction = this.opt.direction;
 
-      var onTransitionEnd = function onTransitionEnd() {
+      var onTransitionEnd = function onTransitionEnd(e) {
         if (fixed) {
           fixed.style.transform = 'translateY(0px)';
+        }
+        if (e.propertyName !== 'transform') {
+          return;
         }
         body.removeEventListener('webkitTransitionEnd', onTransitionEnd);
         body.removeEventListener('transitionend', onTransitionEnd);
@@ -1170,7 +1173,7 @@ var Hiraku = function () {
               if (_this4.fixed) {
                 offset = -_this4.fixed.offsetHeight;
               }
-              (0, _scrollToElement2.default)(target, { offset: offset, duration: 500 });
+              (0, _scrollToElement2.default)(target, { offset: offset, duration: 1000 });
             });
           }
         });

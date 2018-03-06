@@ -115,9 +115,12 @@ export default class Hiraku {
   close(callback = () => {}) {
     const { body, fixed, btn, side } = this;
     const { direction } = this.opt;
-    const onTransitionEnd = () => {
+    const onTransitionEnd = (e) => {
       if (fixed) {
         fixed.style.transform = 'translateY(0px)';
+      }
+      if (e.propertyName !== 'transform') {
+        return;
       }
       body.removeEventListener('webkitTransitionEnd', onTransitionEnd);
       body.removeEventListener('transitionend', onTransitionEnd);
@@ -232,7 +235,7 @@ export default class Hiraku {
             if (this.fixed) {
               offset = - this.fixed.offsetHeight;
             }
-            scrollToElement(target, { offset, duration: 500 });
+            scrollToElement(target, { offset, duration: 1000 });
           });
         }
       });
