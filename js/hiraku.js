@@ -979,7 +979,7 @@ var Hiraku = function () {
       }
       if (fixed) {
         if (isIE) {
-          fixed.style.transform = 'translateX(' + side.offsetWidth + 'px) translateY(' + (0, _lib.getScrollTop)() + 'px)';
+          fixed.style.transform = 'translateX(' + side.offsetWidth + 'px)';
         } else {
           fixed.style.transform = 'translateY(' + (0, _lib.getScrollTop)() + 'px)';
         }
@@ -988,13 +988,13 @@ var Hiraku = function () {
       side.style.height = (0, _lib.getWindowHeight)() + 'px';
       if (direction === 'right') {
         if (isIE) {
-          side.style.transform = 'translateX(0px) translateY(' + (0, _lib.getScrollTop)() + 'px)';
+          side.style.transform = 'translateX(0px)';
         } else {
           side.style.transform = 'translateX(100%) translateY(' + (0, _lib.getScrollTop)() + 'px)';
         }
       } else {
         if (isIE) {
-          side.style.transform = 'translateX(0px) translateY(' + (0, _lib.getScrollTop)() + 'px)';
+          side.style.transform = 'translateX(0px)';
         } else {
           side.style.transform = 'translateX(-100%) translateY(' + (0, _lib.getScrollTop)() + 'px)';
         }

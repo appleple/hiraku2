@@ -86,7 +86,7 @@ export default class Hiraku {
     }
     if (fixed) {
       if (isIE) {
-        fixed.style.transform = `translateX(${side.offsetWidth}px) translateY(${getScrollTop()}px)`;
+        fixed.style.transform = `translateX(${side.offsetWidth}px)`;
       } else {
         fixed.style.transform = `translateY(${getScrollTop()}px)`;
       }
@@ -95,13 +95,13 @@ export default class Hiraku {
     side.style.height = `${getWindowHeight()}px`; 
     if (direction === 'right') {
       if (isIE) {
-        side.style.transform = `translateX(0px) translateY(${getScrollTop()}px)`;
+        side.style.transform = `translateX(0px)`;
       } else {
         side.style.transform = `translateX(100%) translateY(${getScrollTop()}px)`;
       }
     } else {
       if (isIE) {
-        side.style.transform = `translateX(0px) translateY(${getScrollTop()}px)`;
+        side.style.transform = `translateX(0px)`;
       } else {
         side.style.transform = `translateX(-100%) translateY(${getScrollTop()}px)`;
       }
