@@ -243,7 +243,9 @@ export default class Hiraku {
     btn.setAttribute('aria-controls', id);
     btn.setAttribute('id', `hiraku-offcanvas-btn-${id}`);
     btn.addEventListener('click', () => {
-      this.open();
+      if (this.opened === false) {
+        this.open();
+      }
     });
   }
 
