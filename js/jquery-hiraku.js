@@ -956,7 +956,7 @@ var Hiraku = function () {
     });
     window.addEventListener('touchmove', function (e) {
       _this._onTouchMove(e);
-    });
+    }, { passive: false });
     window.addEventListener('touchend', function (e) {
       _this._onTouchEnd(e);
     });
@@ -1065,6 +1065,9 @@ var Hiraku = function () {
   }, {
     key: '_onTouchStart',
     value: function _onTouchStart(e) {
+      if (this.opened === false) {
+        return;
+      }
       this.vy = 0;
       this.side.style.height = 'auto';
       this.oldPosY = this._getTouchPos(e).y;
@@ -1078,12 +1081,11 @@ var Hiraku = function () {
       e.preventDefault();
       var posY = this._getTouchPos(e).y;
       var y = posY - this.oldPosY;
-      var limitHeight = this.side.offsetHeight - (0, _lib.getWindowHeight)();
+      var limitHeight = this.side.scrollHeight - (0, _lib.getWindowHeight)();
       this.scrollAmount += y;
       if (this.scrollAmount < -limitHeight) {
         this.scrollAmount = -limitHeight;
-      }
-      if (this.scrollAmount > 0) {
+      } else if (this.scrollAmount > 0) {
         this.scrollAmount = 0;
       }
       this.side.style.marginTop = this.scrollAmount + 'px';
@@ -1095,6 +1097,9 @@ var Hiraku = function () {
     value: function _onTouchEnd(e) {
       var _this3 = this;
 
+      if (this.opened === false) {
+        return;
+      }
       var limitHeight = this.side.offsetHeight - (0, _lib.getWindowHeight)();
       var registance = 0.4;
 
@@ -1274,7 +1279,7 @@ module.exports = exports['default'];
 module.exports = require('./core/');
 
 },{"./core/":12}],14:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -1293,7 +1298,10 @@ var getWindowWidth = exports.getWindowWidth = function getWindowWidth() {
 };
 
 var getWindowHeight = exports.getWindowHeight = function getWindowHeight() {
-  if (window && window.innerHeight) {
+  var ua = navigator.userAgent;
+  var isIOS = ua.indexOf("iPhone") >= 0 || ua.indexOf("iPad") >= 0 || navigator.userAgent.indexOf("iPod") >= 0;
+
+  if (isIOS) {
     return window.innerHeight;
   } else if (document && document.documentElement) {
     return document.documentElement.clientHeight;
@@ -1314,7 +1322,7 @@ var addClass = exports.addClass = function addClass(element, className) {
   if (element.classList) {
     element.classList.add(className);
   } else {
-    element.className += ' ' + className;
+    element.className += " " + className;
   }
 };
 

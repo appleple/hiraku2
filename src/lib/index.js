@@ -12,7 +12,12 @@ export const getWindowWidth = () => {
 }
 
 export const getWindowHeight = () => {
-  if (window && window.innerHeight) {
+  const ua = navigator.userAgent;
+  const isIOS = ua.indexOf("iPhone") >= 0
+  || ua.indexOf("iPad") >= 0
+  || navigator.userAgent.indexOf("iPod") >= 0;
+
+  if (isIOS) {
     return window.innerHeight;
   } else if (document && document.documentElement) {
     return document.documentElement.clientHeight;

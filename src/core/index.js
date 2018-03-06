@@ -48,7 +48,7 @@ export default class Hiraku {
     });
     window.addEventListener('touchmove', (e) => {
       this._onTouchMove(e);
-    });
+    }, {passive: false});
     window.addEventListener('touchend', (e) => {
       this._onTouchEnd(e);
     });
@@ -138,6 +138,9 @@ export default class Hiraku {
   }
 
   _onTouchStart(e) {
+    if (this.opened === false) {
+      return;
+    }
     this.vy = 0;
     this.side.style.height = 'auto';
     this.oldPosY = this._getTouchPos(e).y;
@@ -150,12 +153,11 @@ export default class Hiraku {
     e.preventDefault();
     const posY = this._getTouchPos(e).y;
     const y = posY - this.oldPosY;
-    const limitHeight = this.side.offsetHeight - getWindowHeight();
+    const limitHeight = this.side.scrollHeight - getWindowHeight();
     this.scrollAmount += y;
     if (this.scrollAmount < -limitHeight) {
       this.scrollAmount = -limitHeight;
-    }
-    if (this.scrollAmount > 0) {
+    } else if (this.scrollAmount > 0) {
       this.scrollAmount = 0;
     }
     this.side.style.marginTop = `${this.scrollAmount}px`;
@@ -164,6 +166,9 @@ export default class Hiraku {
   }
 
   _onTouchEnd(e) {
+    if (this.opened === false) {
+      return;
+    }
     const limitHeight = this.side.offsetHeight - getWindowHeight();
     const registance = 0.4;
 
