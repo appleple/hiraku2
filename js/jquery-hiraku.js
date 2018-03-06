@@ -39,6 +39,13 @@
  *   maintainers: tjholowaychuk <tj@vision-media.ca>
  *   version: 1.0.0
  *
+ * es6-object-assign:
+ *   license: MIT (http://opensource.org/licenses/MIT)
+ *   author: Rubén Norte <rubennorte@gmail.com>
+ *   maintainers: rubennorte <rubennorte@gmail.com>
+ *   homepage: https://github.com/rubennorte/es6-object-assign
+ *   version: 1.1.0
+ *
  * scroll-to:
  *   license: MIT (http://opensource.org/licenses/MIT)
  *   maintainers: tjholowaychuk <tj@vision-media.ca>, tootallnate <nathan@tootallnate.net>
@@ -700,6 +707,59 @@ exports['out-bounce'] = exports.outBounce;
 exports['in-out-bounce'] = exports.inOutBounce;
 
 },{}],7:[function(require,module,exports){
+'use strict';
+
+require('./index').polyfill();
+
+},{"./index":8}],8:[function(require,module,exports){
+/**
+ * Code refactored from Mozilla Developer Network:
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+ */
+
+'use strict';
+
+function assign(target, firstSource) {
+  if (target === undefined || target === null) {
+    throw new TypeError('Cannot convert first argument to object');
+  }
+
+  var to = Object(target);
+  for (var i = 1; i < arguments.length; i++) {
+    var nextSource = arguments[i];
+    if (nextSource === undefined || nextSource === null) {
+      continue;
+    }
+
+    var keysArray = Object.keys(Object(nextSource));
+    for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
+      var nextKey = keysArray[nextIndex];
+      var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
+      if (desc !== undefined && desc.enumerable) {
+        to[nextKey] = nextSource[nextKey];
+      }
+    }
+  }
+  return to;
+}
+
+function polyfill() {
+  if (!Object.assign) {
+    Object.defineProperty(Object, 'assign', {
+      enumerable: false,
+      configurable: true,
+      writable: true,
+      value: assign
+    });
+  }
+}
+
+module.exports = {
+  assign: assign,
+  polyfill: polyfill
+};
+
+},{}],9:[function(require,module,exports){
 var scroll = require('scroll-to');
 
 function calculateScrollOffset(elem, additionalOffset, alignment) {
@@ -733,7 +793,7 @@ module.exports = function (elem, options) {
   if (elem) return scroll(0, calculateScrollOffset(elem, options.offset, options.align), options);
 };
 
-},{"scroll-to":8}],8:[function(require,module,exports){
+},{"scroll-to":10}],10:[function(require,module,exports){
 /**
  * Module dependencies.
  */
@@ -801,7 +861,7 @@ function scroll() {
   return { top: y, left: x };
 }
 
-},{"raf":3,"tween":4}],9:[function(require,module,exports){
+},{"raf":3,"tween":4}],11:[function(require,module,exports){
 'use strict';
 
 var Hiraku = require('../index');
@@ -826,7 +886,7 @@ if (typeof define === 'function' && define.amd) {
 
 module.exports = applyJQuery;
 
-},{"../index":11}],10:[function(require,module,exports){
+},{"../index":13}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -838,6 +898,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _scrollToElement = require('scroll-to-element');
 
 var _scrollToElement2 = _interopRequireDefault(_scrollToElement);
+
+require('es6-object-assign/auto');
 
 var _lib = require('../lib');
 
@@ -1179,12 +1241,12 @@ var Hiraku = function () {
 exports.default = Hiraku;
 module.exports = exports['default'];
 
-},{"../lib":12,"scroll-to-element":7}],11:[function(require,module,exports){
+},{"../lib":14,"es6-object-assign/auto":7,"scroll-to-element":9}],13:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./core/');
 
-},{"./core/":10}],12:[function(require,module,exports){
+},{"./core/":12}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1250,4 +1312,4 @@ var after = exports.after = function after(el, html) {
   el.insertAdjacentHTML('afterend', html);
 };
 
-},{}]},{},[9]);
+},{}]},{},[11]);

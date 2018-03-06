@@ -1,4 +1,5 @@
 import scrollToElement from 'scroll-to-element';
+import 'es6-object-assign/auto';
 import { getUniqId, getWindowWidth, getWindowHeight, hasClass, addClass, removeClass, getScrollTop, wrap, after } from '../lib';
 
 const defaults = {
