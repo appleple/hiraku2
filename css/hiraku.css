@@ -95,6 +95,16 @@
   clip: rect(0 0 0 0);
 }
 
+.js-hiraku-fixed {
+  z-index: 1000;
+}
+
+.js-hiraku-offcanvas-body-ie .js-hiraku-offcanvas-sidebar-right,
+.js-hiraku-offcanvas-body-ie .js-hiraku-offcanvas-sidebar-left,
+.js-hiraku-offcanvas-body-ie .js-hiraku-fixed {
+  transition: transform 0.3s ease-in-out;
+}
+
 .hiraku-open-btn {
   background: transparent;
   border: 1px solid #ccc;

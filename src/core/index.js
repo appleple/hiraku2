@@ -30,6 +30,9 @@ export default class Hiraku {
     if (!this.side || !this.btn) {
       return;
     }
+    if (this.fixed) {
+      addClass(this.fixed, 'js-hiraku-fixed');
+    }
     window.addEventListener('resize', () => {
       if ('requestAnimationFrame' in window) {
         cancelAnimationFrame(this.animationFrameId);

@@ -913,6 +913,9 @@ var Hiraku = function () {
     if (!this.side || !this.btn) {
       return;
     }
+    if (this.fixed) {
+      (0, _lib.addClass)(this.fixed, 'js-hiraku-fixed');
+    }
     window.addEventListener('resize', function () {
       if ('requestAnimationFrame' in window) {
         cancelAnimationFrame(_this.animationFrameId);
