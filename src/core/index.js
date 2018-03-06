@@ -26,6 +26,9 @@ export default class Hiraku {
     this.scrollAmount = 0;
     this.oldPosY = 0;
     this.vy = 0;
+    if (!this.side || !this.btn) {
+      return;
+    }
     window.addEventListener('resize', () => {
       if ('requestAnimationFrame' in window) {
         cancelAnimationFrame(this.animationFrameId);
@@ -44,7 +47,7 @@ export default class Hiraku {
     });
     window.addEventListener('touchend', (e) => {
       this._onTouchEnd(e);
-    })
+    });
     this._setHirakuSideMenu();
     this._setHirakuBtn();
     this._setHirakuBody();
@@ -97,7 +100,9 @@ export default class Hiraku {
     const { body, fixed, btn, side } = this;
     const { direction } = this.opt;
     const onTransitionEnd = () => {
-      fixed.style.transform = 'translateY(0px)';
+      if (fixed) {
+        fixed.style.transform = 'translateY(0px)';
+      }
       body.removeEventListener('webkitTransitionEnd', onTransitionEnd);
       body.removeEventListener('transitionend', onTransitionEnd);
       btn.setAttribute('aria-expanded', false);

@@ -934,6 +934,9 @@ var Hiraku = function () {
     this.scrollAmount = 0;
     this.oldPosY = 0;
     this.vy = 0;
+    if (!this.side || !this.btn) {
+      return;
+    }
     window.addEventListener('resize', function () {
       if ('requestAnimationFrame' in window) {
         cancelAnimationFrame(_this.animationFrameId);
@@ -1022,7 +1025,9 @@ var Hiraku = function () {
       var direction = this.opt.direction;
 
       var onTransitionEnd = function onTransitionEnd() {
-        fixed.style.transform = 'translateY(0px)';
+        if (fixed) {
+          fixed.style.transform = 'translateY(0px)';
+        }
         body.removeEventListener('webkitTransitionEnd', onTransitionEnd);
         body.removeEventListener('transitionend', onTransitionEnd);
         btn.setAttribute('aria-expanded', false);
