@@ -57,3 +57,11 @@ export const wrap = (el, wrapper) => {
 export const after = (el, html) => {
   el.insertAdjacentHTML('afterend', html);
 }
+
+export const isIE = () => {
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  if( userAgent.match(/(msie|MSIE)/) || userAgent.match(/(T|t)rident/) ) {
+    return true;
+  }
+  return false;
+}

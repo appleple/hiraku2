@@ -934,6 +934,7 @@ var Hiraku = function () {
     this.scrollAmount = 0;
     this.oldPosY = 0;
     this.vy = 0;
+    this.isIE = (0, _lib.isIE)();
     if (!this.side || !this.btn) {
       return;
     }
@@ -969,7 +970,8 @@ var Hiraku = function () {
           btn = this.btn,
           fixed = this.fixed,
           parentElement = this.parentElement,
-          body = this.body;
+          body = this.body,
+          isIE = this.isIE;
       var _opt = this.opt,
           direction = _opt.direction,
           focusableElements = _opt.focusableElements;
@@ -1001,14 +1003,26 @@ var Hiraku = function () {
         (0, _lib.addClass)(body, 'js-hiraku-offcanvas-body-left');
       }
       if (fixed) {
-        fixed.style.transform = 'translateY(' + (0, _lib.getScrollTop)() + 'px)';
+        if (isIE) {
+          fixed.style.transform = 'translateX(' + side.offsetWidth + 'px) translateY(' + (0, _lib.getScrollTop)() + 'px)';
+        } else {
+          fixed.style.transform = 'translateY(' + (0, _lib.getScrollTop)() + 'px)';
+        }
       }
       this.scrollAmount = 0;
       side.style.height = (0, _lib.getWindowHeight)() + 'px';
       if (direction === 'right') {
-        side.style.transform = 'translateX(100%) translateY(' + (0, _lib.getScrollTop)() + 'px)';
+        if (isIE) {
+          side.style.transform = 'translateX(0px) translateY(' + (0, _lib.getScrollTop)() + 'px)';
+        } else {
+          side.style.transform = 'translateX(100%) translateY(' + (0, _lib.getScrollTop)() + 'px)';
+        }
       } else {
-        side.style.transform = 'translateX(-100%) translateY(' + (0, _lib.getScrollTop)() + 'px)';
+        if (isIE) {
+          side.style.transform = 'translateX(0px) translateY(' + (0, _lib.getScrollTop)() + 'px)';
+        } else {
+          side.style.transform = 'translateX(-100%) translateY(' + (0, _lib.getScrollTop)() + 'px)';
+        }
       }
       side.style.marginTop = '0px';
     }
@@ -1177,6 +1191,9 @@ var Hiraku = function () {
     value: function _setHirakuBody() {
       var body = this.body;
       (0, _lib.addClass)(body, 'js-hiraku-offcanvas-body');
+      if (this.isIE) {
+        (0, _lib.addClass)(body, 'js-hiraku-offcanvas-body-ie');
+      }
     }
   }, {
     key: '_offcanvasClickHandler',
@@ -1315,6 +1332,14 @@ var wrap = exports.wrap = function wrap(el, wrapper) {
 
 var after = exports.after = function after(el, html) {
   el.insertAdjacentHTML('afterend', html);
+};
+
+var isIE = exports.isIE = function isIE() {
+  var userAgent = window.navigator.userAgent.toLowerCase();
+  if (userAgent.match(/(msie|MSIE)/) || userAgent.match(/(T|t)rident/)) {
+    return true;
+  }
+  return false;
 };
 
 },{}]},{},[11]);

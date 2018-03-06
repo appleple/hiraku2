@@ -1,6 +1,6 @@
 import scrollToElement from 'scroll-to-element';
 import 'es6-object-assign/auto';
-import { getUniqId, getWindowWidth, getWindowHeight, hasClass, addClass, removeClass, getScrollTop, wrap, after } from '../lib';
+import { getUniqId, getWindowWidth, getWindowHeight, hasClass, addClass, removeClass, getScrollTop, wrap, after, isIE } from '../lib';
 
 const defaults = {
   direction: 'right',
@@ -26,6 +26,7 @@ export default class Hiraku {
     this.scrollAmount = 0;
     this.oldPosY = 0;
     this.vy = 0;
+    this.isIE = isIE();
     if (!this.side || !this.btn) {
       return;
     }
@@ -55,7 +56,7 @@ export default class Hiraku {
   }
 
   open() {
-    const { side, btn, fixed, parentElement, body } = this;
+    const { side, btn, fixed, parentElement, body, isIE } = this;
     const { direction, focusableElements } = this.opt;
     const elements = side.querySelectorAll(focusableElements);
     const first = elements[0];
@@ -84,14 +85,26 @@ export default class Hiraku {
       addClass(body, 'js-hiraku-offcanvas-body-left');
     }
     if (fixed) {
-      fixed.style.transform = `translateY(${getScrollTop()}px)`;
+      if (isIE) {
+        fixed.style.transform = `translateX(${side.offsetWidth}px) translateY(${getScrollTop()}px)`;
+      } else {
+        fixed.style.transform = `translateY(${getScrollTop()}px)`;
+      }
     }
     this.scrollAmount = 0;
     side.style.height = `${getWindowHeight()}px`; 
     if (direction === 'right') {
-      side.style.transform = `translateX(100%) translateY(${getScrollTop()}px)`;
+      if (isIE) {
+        side.style.transform = `translateX(0px) translateY(${getScrollTop()}px)`;
+      } else {
+        side.style.transform = `translateX(100%) translateY(${getScrollTop()}px)`;
+      }
     } else {
-      side.style.transform = `translateX(-100%) translateY(${getScrollTop()}px)`;
+      if (isIE) {
+        side.style.transform = `translateX(0px) translateY(${getScrollTop()}px)`;
+      } else {
+        side.style.transform = `translateX(-100%) translateY(${getScrollTop()}px)`;
+      }
     }
     side.style.marginTop = '0px';
   }
@@ -234,6 +247,9 @@ export default class Hiraku {
   _setHirakuBody() {
     const body = this.body;
     addClass(body, 'js-hiraku-offcanvas-body');
+    if (this.isIE) {
+      addClass(body, 'js-hiraku-offcanvas-body-ie');
+    }
   }
 
   _offcanvasClickHandler(e) {
