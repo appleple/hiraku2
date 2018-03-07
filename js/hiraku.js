@@ -1016,6 +1016,9 @@ var Hiraku = function () {
   _createClass(Hiraku, [{
     key: 'open',
     value: function open() {
+      if (this.opened === true) {
+        return;
+      }
       var side = this.side,
           btn = this.btn,
           fixed = this.fixed,
@@ -1221,12 +1224,16 @@ var Hiraku = function () {
           if (href.charAt(0) === '#') {
             e.preventDefault();
             _this4.close(function () {
+              _this4.opened = true;
               var target = document.querySelector(href);
               var offset = 0;
               if (_this4.fixed) {
                 offset = -_this4.fixed.offsetHeight;
               }
               (0, _scrollToElement2.default)(target, { offset: offset, duration: 1000 });
+              setTimeout(function () {
+                _this4.opened = false;
+              }, 1000);
             });
           }
         });
@@ -1247,9 +1254,7 @@ var Hiraku = function () {
       btn.setAttribute('aria-controls', id);
       btn.setAttribute('id', 'hiraku-offcanvas-btn-' + id);
       btn.addEventListener('click', function () {
-        if (_this5.opened === false) {
-          _this5.open();
-        }
+        _this5.open();
       });
     }
   }, {

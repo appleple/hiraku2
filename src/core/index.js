@@ -54,6 +54,9 @@ export default class Hiraku {
   }
 
   open() {
+    if (this.opened === true) {
+      return;
+    }
     const { side, btn, fixed, body } = this;
     const { direction, focusableElements } = this.opt;
     const elements = side.querySelectorAll(focusableElements);
@@ -232,12 +235,16 @@ export default class Hiraku {
         if (href.charAt(0) === '#') {
           e.preventDefault();
           this.close(() => {
+            this.opened = true;
             const target = document.querySelector(href);
             let offset = 0;
             if (this.fixed) {
               offset = -this.fixed.offsetHeight;
             }
             scrollToElement(target, { offset, duration: 1000 });
+            setTimeout(() => {
+              this.opened = false;
+            }, 1000);
           });
         }
       });
@@ -253,9 +260,7 @@ export default class Hiraku {
     btn.setAttribute('aria-controls', id);
     btn.setAttribute('id', `hiraku-offcanvas-btn-${id}`);
     btn.addEventListener('click', () => {
-      if (this.opened === false) {
-        this.open();
-      }
+      this.open();
     });
   }
 
