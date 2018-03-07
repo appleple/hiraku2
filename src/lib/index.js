@@ -12,18 +12,7 @@ export const getWindowWidth = () => {
 }
 
 export const getWindowHeight = () => {
-  const ua = navigator.userAgent;
-  const isIOS = ua.indexOf("iPhone") >= 0
-  || ua.indexOf("iPad") >= 0
-  || navigator.userAgent.indexOf("iPod") >= 0;
-
-  if (isIOS) {
-    return window.innerHeight;
-  } else if (document && document.documentElement) {
-    return document.documentElement.clientHeight;
-  } else {
-    return 0;
-  }
+ return window.innerHeight || document.documentElement.clientHeight || 0;
 }
 
 export const hasClass = (el, className) => {

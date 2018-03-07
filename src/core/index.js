@@ -26,6 +26,7 @@ export default class Hiraku {
     this.scrollAmount = 0;
     this.oldPosY = 0;
     this.vy = 0;
+    this.windowHeight = 0;
     this.isIE = isIE();
     if (!this.side || !this.btn) {
       return;
@@ -75,13 +76,13 @@ export default class Hiraku {
       }
     }
     this.opened = true;
+    this.windowHeight = getWindowHeight();
     first.removeEventListener('keydown', lastFocus);
     first.addEventListener('keydown', lastFocus);
     last.removeEventListener('keydown', firstFocus);
     last.addEventListener('keydown', firstFocus);
     btn.setAttribute('aria-expanded', true);
     addClass(btn, 'js-hiraku-offcanvas-btn-active');
-    parentElement.setAttribute('aria-hidden', false);
     if (direction === 'right') {
       addClass(body, 'js-hiraku-offcanvas-body-right');
     } else {
@@ -95,6 +96,7 @@ export default class Hiraku {
       }
     }
     this.scrollAmount = 0;
+    side.setAttribute('aria-hidden', false);
     side.style.height = `${getWindowHeight()}px`; 
     if (direction === 'right') {
       if (isIE) {
@@ -126,7 +128,7 @@ export default class Hiraku {
       body.removeEventListener('transitionend', onTransitionEnd);
       btn.setAttribute('aria-expanded', false);
       side.style.transform = '';
-      side.setAttribute('aria-hidden', false);
+      side.setAttribute('aria-hidden', true);
       removeClass(btn, 'js-hiraku-offcanvas-btn-active');
       this.opened = false;
       callback();
@@ -156,7 +158,7 @@ export default class Hiraku {
     e.preventDefault();
     const posY = this._getTouchPos(e).y;
     const y = posY - this.oldPosY;
-    const limitHeight = this.side.scrollHeight - getWindowHeight();
+    const limitHeight = this.side.scrollHeight - this.windowHeight;
     this.scrollAmount += y;
     if (this.scrollAmount < -limitHeight) {
       this.scrollAmount = -limitHeight;
@@ -172,7 +174,7 @@ export default class Hiraku {
     if (this.opened === false) {
       return;
     }
-    const limitHeight = this.side.offsetHeight - getWindowHeight();
+    const limitHeight = this.side.offsetHeight - this.windowHeight;
     const registance = 0.4;
 
     const interval = () => {
@@ -188,10 +190,12 @@ export default class Hiraku {
       this.scrollAmount += this.vy;
       if (this.scrollAmount < -limitHeight) {
         this.scrollAmount = -limitHeight;
+        this.side.style.marginTop = `${this.scrollAmount}px`;
         return;
       }
       if (this.scrollAmount > 0) {
         this.scrollAmount = 0;
+        this.side.style.marginTop = `${this.scrollAmount}px`;
         return;
       }
       this.side.style.marginTop = `${this.scrollAmount}px`;

@@ -8,7 +8,7 @@ $(function(){
   $('.js-offcanvas').hiraku({
     btn: ".js-offcanvas-btn",
     fixedHeader: ".js-fixed-header",
-    direction: "left",
+    direction: "right",
     breakpoint: 767
   });
 });

@@ -934,6 +934,7 @@ var Hiraku = function () {
     this.scrollAmount = 0;
     this.oldPosY = 0;
     this.vy = 0;
+    this.windowHeight = 0;
     this.isIE = (0, _lib.isIE)();
     if (!this.side || !this.btn) {
       return;
@@ -993,13 +994,13 @@ var Hiraku = function () {
         }
       };
       this.opened = true;
+      this.windowHeight = (0, _lib.getWindowHeight)();
       first.removeEventListener('keydown', lastFocus);
       first.addEventListener('keydown', lastFocus);
       last.removeEventListener('keydown', firstFocus);
       last.addEventListener('keydown', firstFocus);
       btn.setAttribute('aria-expanded', true);
       (0, _lib.addClass)(btn, 'js-hiraku-offcanvas-btn-active');
-      parentElement.setAttribute('aria-hidden', false);
       if (direction === 'right') {
         (0, _lib.addClass)(body, 'js-hiraku-offcanvas-body-right');
       } else {
@@ -1013,6 +1014,7 @@ var Hiraku = function () {
         }
       }
       this.scrollAmount = 0;
+      side.setAttribute('aria-hidden', false);
       side.style.height = (0, _lib.getWindowHeight)() + 'px';
       if (direction === 'right') {
         if (isIE) {
@@ -1052,7 +1054,7 @@ var Hiraku = function () {
         body.removeEventListener('transitionend', onTransitionEnd);
         btn.setAttribute('aria-expanded', false);
         side.style.transform = '';
-        side.setAttribute('aria-hidden', false);
+        side.setAttribute('aria-hidden', true);
         (0, _lib.removeClass)(btn, 'js-hiraku-offcanvas-btn-active');
         _this2.opened = false;
         callback();
@@ -1084,7 +1086,7 @@ var Hiraku = function () {
       e.preventDefault();
       var posY = this._getTouchPos(e).y;
       var y = posY - this.oldPosY;
-      var limitHeight = this.side.scrollHeight - (0, _lib.getWindowHeight)();
+      var limitHeight = this.side.scrollHeight - this.windowHeight;
       this.scrollAmount += y;
       if (this.scrollAmount < -limitHeight) {
         this.scrollAmount = -limitHeight;
@@ -1103,7 +1105,7 @@ var Hiraku = function () {
       if (this.opened === false) {
         return;
       }
-      var limitHeight = this.side.offsetHeight - (0, _lib.getWindowHeight)();
+      var limitHeight = this.side.offsetHeight - this.windowHeight;
       var registance = 0.4;
 
       var interval = function interval() {
@@ -1119,10 +1121,12 @@ var Hiraku = function () {
         _this3.scrollAmount += _this3.vy;
         if (_this3.scrollAmount < -limitHeight) {
           _this3.scrollAmount = -limitHeight;
+          _this3.side.style.marginTop = _this3.scrollAmount + 'px';
           return;
         }
         if (_this3.scrollAmount > 0) {
           _this3.scrollAmount = 0;
+          _this3.side.style.marginTop = _this3.scrollAmount + 'px';
           return;
         }
         _this3.side.style.marginTop = _this3.scrollAmount + 'px';
@@ -1282,7 +1286,7 @@ module.exports = exports['default'];
 module.exports = require('./core/');
 
 },{"./core/":12}],14:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -1301,16 +1305,7 @@ var getWindowWidth = exports.getWindowWidth = function getWindowWidth() {
 };
 
 var getWindowHeight = exports.getWindowHeight = function getWindowHeight() {
-  var ua = navigator.userAgent;
-  var isIOS = ua.indexOf("iPhone") >= 0 || ua.indexOf("iPad") >= 0 || navigator.userAgent.indexOf("iPod") >= 0;
-
-  if (isIOS) {
-    return window.innerHeight;
-  } else if (document && document.documentElement) {
-    return document.documentElement.clientHeight;
-  } else {
-    return 0;
-  }
+  return window.innerHeight || document.documentElement.clientHeight || 0;
 };
 
 var hasClass = exports.hasClass = function hasClass(el, className) {
@@ -1325,7 +1320,7 @@ var addClass = exports.addClass = function addClass(element, className) {
   if (element.classList) {
     element.classList.add(className);
   } else {
-    element.className += " " + className;
+    element.className += ' ' + className;
   }
 };
 
