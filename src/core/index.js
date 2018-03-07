@@ -1,4 +1,5 @@
 import scrollToElement from 'scroll-to-element';
+import debounce from 'debounce';
 import 'es6-object-assign/auto';
 import { getUniqId, getWindowWidth, getWindowHeight, hasClass, addClass, removeClass, getScrollTop, after, isIE } from '../lib';
 
@@ -34,16 +35,9 @@ export default class Hiraku {
     if (this.fixed) {
       addClass(this.fixed, 'js-hiraku-fixed');
     }
-    window.addEventListener('resize', () => {
-      if ('requestAnimationFrame' in window) {
-        cancelAnimationFrame(this.animationFrameId);
-        this.animationFrameId = requestAnimationFrame(() => {
-          this._resizeHandler();
-        });
-      } else {
+    window.addEventListener('resize', debounce(() => {
         this._resizeHandler();
-      }
-    });
+    }, 200));
     window.addEventListener('touchstart', (e) => {
       this._onTouchStart(e);
     });
@@ -116,6 +110,9 @@ export default class Hiraku {
   }
 
   close(callback = () => {}) {
+    if (this.opened === false) {
+      return;
+    }
     const { body, fixed, btn, side } = this;
     const { direction } = this.opt;
     const onTransitionEnd = (e) => {
@@ -315,10 +312,11 @@ export default class Hiraku {
     }
     if (breakpoint === -1 || breakpoint >= windowWidth) {
       addClass(body, 'js-hiraku-offcanvas-body-active');
-      side.setAttribute('aria-hidden', true);
     } else {
       removeClass(body, 'js-hiraku-offcanvas-body-active');
-      this.close();
+      if (this.open) {
+        this.close();
+      }
     }
   }
 }

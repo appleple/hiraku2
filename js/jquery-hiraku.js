@@ -5,7 +5,7 @@
  * hiraku:
  *   license: MIT (http://opensource.org/licenses/MIT)
  *   author: appleple
- *   version: 2.0.0
+ *   version: 2.0.1
  *
  * component-clone:
  *   maintainers: jongleberry <jonathanrichardong@gmail.com>
@@ -32,6 +32,12 @@
  * component-type:
  *   maintainers: maxogden <mogden@gmail.com>, jongleberry <jonathanrichardong@gmail.com>, dominicbarnes <dominic@dbarnes.info>, tootallnate <nathan@tootallnate.net>, tjholowaychuk <tj@vision-media.ca>, juliangruber <julian@juliangruber.com>, ianstormtaylor <ian@ianstormtaylor.com>, timoxley <secoif@gmail.com>, mattmueller <mattmuelle@gmail.com>, jonathanong <jonathanrichardong@gmail.com>, queckezz <fabian.eichenberger@gmail.com>, yields <yields@icloud.com>, anthonyshort <antshort@gmail.com>, nami-doc <vendethiel@hotmail.fr>, clintwood <clint@anotherway.co.za>, thehydroimpulse <dnfagnan@gmail.com>, stephenmathieson <me@stephenmathieson.com>, trevorgerhardt <trevorgerhardt@gmail.com>, timaschew <timaschew@gmail.com>, hughsk <hughskennedy@gmail.com>
  *   homepage: https://github.com/component/type
+ *   version: 1.1.0
+ *
+ * debounce:
+ *   license: MIT (http://opensource.org/licenses/MIT)
+ *   maintainers: defunctzombie <shtylman@gmail.com>, dfcreative <df.creative@gmail.com>, jongleberry <jonathanrichardong@gmail.com>, tootallnate <nathan@tootallnate.net>, clintwood <clint@anotherway.co.za>, thehydroimpulse <dnfagnan@gmail.com>, tjholowaychuk <tj@vision-media.ca>, rauchg <rauchg@gmail.com>, retrofox <rdsuarez@gmail.com>, coreh <thecoreh@gmail.com>, forbeslindesay <forbes@lindesay.co.uk>, kelonye <kelonyemitchel@gmail.com>, yields <yields@icloud.com>, anthonyshort <antshort@gmail.com>, ianstormtaylor <ian@ianstormtaylor.com>, cristiandouce <cristiandouce@gmail.com>, swatinem <arpad.borsos@googlemail.com>, mattmueller <mattmuelle@gmail.com>, stagas <gstagas@gmail.com>, amasad <amjad.masad@gmail.com>, juliangruber <julian@juliangruber.com>, calvinfo <calvin@calv.info>, dominicbarnes <dominic@dbarnes.info>, timoxley <secoif@gmail.com>, stephenmathieson <me@stephenmathieson.com>, trevorgerhardt <trevorgerhardt@gmail.com>, timaschew <timaschew@gmail.com>
+ *   homepage: https://github.com/component/debounce#readme
  *   version: 1.1.0
  *
  * ease-component:
@@ -498,7 +504,7 @@ Tween.prototype.update = function(fn){
   this._update = fn;
   return this;
 };
-},{"clone":1,"ease":6,"emitter":2,"type":5}],5:[function(require,module,exports){
+},{"clone":1,"ease":7,"emitter":2,"type":5}],5:[function(require,module,exports){
 /**
  * toString ref.
  */
@@ -535,6 +541,74 @@ module.exports = function(val){
 };
 
 },{}],6:[function(require,module,exports){
+/**
+ * Returns a function, that, as long as it continues to be invoked, will not
+ * be triggered. The function will be called after it stops being called for
+ * N milliseconds. If `immediate` is passed, trigger the function on the
+ * leading edge, instead of the trailing. The function also has a property 'clear' 
+ * that is a function which will clear the timer to prevent previously scheduled executions. 
+ *
+ * @source underscore.js
+ * @see http://unscriptable.com/2009/03/20/debouncing-javascript-methods/
+ * @param {Function} function to wrap
+ * @param {Number} timeout in ms (`100`)
+ * @param {Boolean} whether to execute at the beginning (`false`)
+ * @api public
+ */
+
+module.exports = function debounce(func, wait, immediate){
+  var timeout, args, context, timestamp, result;
+  if (null == wait) wait = 100;
+
+  function later() {
+    var last = Date.now() - timestamp;
+
+    if (last < wait && last >= 0) {
+      timeout = setTimeout(later, wait - last);
+    } else {
+      timeout = null;
+      if (!immediate) {
+        result = func.apply(context, args);
+        context = args = null;
+      }
+    }
+  };
+
+  var debounced = function(){
+    context = this;
+    args = arguments;
+    timestamp = Date.now();
+    var callNow = immediate && !timeout;
+    if (!timeout) timeout = setTimeout(later, wait);
+    if (callNow) {
+      result = func.apply(context, args);
+      context = args = null;
+    }
+
+    return result;
+  };
+
+  debounced.clear = function() {
+    if (timeout) {
+      clearTimeout(timeout);
+      timeout = null;
+    }
+  };
+  
+  debounced.flush = function() {
+    if (timeout) {
+      result = func.apply(context, args);
+      context = args = null;
+      
+      clearTimeout(timeout);
+      timeout = null;
+    }
+  };
+
+  return debounced;
+};
+
+},{}],7:[function(require,module,exports){
 
 // easing functions from "Tween.js"
 
@@ -706,12 +780,12 @@ exports['in-bounce'] = exports.inBounce;
 exports['out-bounce'] = exports.outBounce;
 exports['in-out-bounce'] = exports.inOutBounce;
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 require('./index').polyfill();
 
-},{"./index":8}],8:[function(require,module,exports){
+},{"./index":9}],9:[function(require,module,exports){
 /**
  * Code refactored from Mozilla Developer Network:
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
@@ -759,7 +833,7 @@ module.exports = {
   polyfill: polyfill
 };
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 var scroll = require('scroll-to');
 
 function calculateScrollOffset(elem, additionalOffset, alignment) {
@@ -793,7 +867,7 @@ module.exports = function (elem, options) {
   if (elem) return scroll(0, calculateScrollOffset(elem, options.offset, options.align), options);
 };
 
-},{"scroll-to":10}],10:[function(require,module,exports){
+},{"scroll-to":11}],11:[function(require,module,exports){
 /**
  * Module dependencies.
  */
@@ -861,7 +935,7 @@ function scroll() {
   return { top: y, left: x };
 }
 
-},{"raf":3,"tween":4}],11:[function(require,module,exports){
+},{"raf":3,"tween":4}],12:[function(require,module,exports){
 'use strict';
 
 var Hiraku = require('../index');
@@ -886,7 +960,7 @@ if (typeof define === 'function' && define.amd) {
 
 module.exports = applyJQuery;
 
-},{"../index":13}],12:[function(require,module,exports){
+},{"../index":14}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -898,6 +972,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _scrollToElement = require('scroll-to-element');
 
 var _scrollToElement2 = _interopRequireDefault(_scrollToElement);
+
+var _debounce = require('debounce');
+
+var _debounce2 = _interopRequireDefault(_debounce);
 
 require('es6-object-assign/auto');
 
@@ -942,16 +1020,9 @@ var Hiraku = function () {
     if (this.fixed) {
       (0, _lib.addClass)(this.fixed, 'js-hiraku-fixed');
     }
-    window.addEventListener('resize', function () {
-      if ('requestAnimationFrame' in window) {
-        cancelAnimationFrame(_this.animationFrameId);
-        _this.animationFrameId = requestAnimationFrame(function () {
-          _this._resizeHandler();
-        });
-      } else {
-        _this._resizeHandler();
-      }
-    });
+    window.addEventListener('resize', (0, _debounce2.default)(function () {
+      _this._resizeHandler();
+    }, 200));
     window.addEventListener('touchstart', function (e) {
       _this._onTouchStart(e);
     });
@@ -1036,6 +1107,10 @@ var Hiraku = function () {
       var _this2 = this;
 
       var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
+
+      if (this.opened === false) {
+        return;
+      }
       var body = this.body,
           fixed = this.fixed,
           btn = this.btn,
@@ -1265,10 +1340,11 @@ var Hiraku = function () {
       }
       if (breakpoint === -1 || breakpoint >= windowWidth) {
         (0, _lib.addClass)(body, 'js-hiraku-offcanvas-body-active');
-        side.setAttribute('aria-hidden', true);
       } else {
         (0, _lib.removeClass)(body, 'js-hiraku-offcanvas-body-active');
-        this.close();
+        if (this.open) {
+          this.close();
+        }
       }
     }
   }]);
@@ -1279,12 +1355,12 @@ var Hiraku = function () {
 exports.default = Hiraku;
 module.exports = exports['default'];
 
-},{"../lib":14,"es6-object-assign/auto":7,"scroll-to-element":9}],13:[function(require,module,exports){
+},{"../lib":15,"debounce":6,"es6-object-assign/auto":8,"scroll-to-element":10}],14:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./core/');
 
-},{"./core/":12}],14:[function(require,module,exports){
+},{"./core/":13}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1352,4 +1428,4 @@ var isIE = exports.isIE = function isIE() {
   return false;
 };
 
-},{}]},{},[11]);
+},{}]},{},[12]);
