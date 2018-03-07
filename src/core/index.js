@@ -319,9 +319,7 @@ export default class Hiraku {
       addClass(body, 'js-hiraku-offcanvas-body-active');
     } else {
       removeClass(body, 'js-hiraku-offcanvas-body-active');
-      if (this.open) {
-        this.close();
-      }
     }
+    this.close();
   }
 }
