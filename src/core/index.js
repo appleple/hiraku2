@@ -63,24 +63,27 @@ export default class Hiraku {
     const { side, btn, fixed, body } = this;
     const { direction, focusableElements } = this.opt;
     const elements = side.querySelectorAll(focusableElements);
-    const first = elements[0];
-    const last = elements[elements.length - 1];
-    const lastFocus = (e) => {
-      if (e.which === 9 && e.shiftKey) {
-        last.focus();
-      }
-    };
-    const firstFocus = (e) => {
-      if (e.which === 9 && !e.shiftKey) {
-        first.focus();
-      }
-    };
+    // tab focus
+    if (elements && elements.length) {
+      const first = elements[0];
+      const last = elements[elements.length - 1];
+      const lastFocus = (e) => {
+        if (e.which === 9 && e.shiftKey) {
+          last.focus();
+        }
+      };
+      const firstFocus = (e) => {
+        if (e.which === 9 && !e.shiftKey) {
+          first.focus();
+        }
+      };
+      first.removeEventListener('keydown', lastFocus);
+      first.addEventListener('keydown', lastFocus);
+      last.removeEventListener('keydown', firstFocus);
+      last.addEventListener('keydown', firstFocus);
+    }
     this.opened = true;
     this.windowHeight = getWindowHeight();
-    first.removeEventListener('keydown', lastFocus);
-    first.addEventListener('keydown', lastFocus);
-    last.removeEventListener('keydown', firstFocus);
-    last.addEventListener('keydown', firstFocus);
     btn.setAttribute('aria-expanded', true);
     addClass(btn, 'js-hiraku-offcanvas-btn-active');
     if (direction === 'right') {

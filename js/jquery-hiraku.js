@@ -979,24 +979,27 @@ var Hiraku = function () {
           focusableElements = _opt.focusableElements;
 
       var elements = side.querySelectorAll(focusableElements);
-      var first = elements[0];
-      var last = elements[elements.length - 1];
-      var lastFocus = function lastFocus(e) {
-        if (e.which === 9 && e.shiftKey) {
-          last.focus();
-        }
-      };
-      var firstFocus = function firstFocus(e) {
-        if (e.which === 9 && !e.shiftKey) {
-          first.focus();
-        }
-      };
+      // tab focus
+      if (elements && elements.length) {
+        var first = elements[0];
+        var last = elements[elements.length - 1];
+        var lastFocus = function lastFocus(e) {
+          if (e.which === 9 && e.shiftKey) {
+            last.focus();
+          }
+        };
+        var firstFocus = function firstFocus(e) {
+          if (e.which === 9 && !e.shiftKey) {
+            first.focus();
+          }
+        };
+        first.removeEventListener('keydown', lastFocus);
+        first.addEventListener('keydown', lastFocus);
+        last.removeEventListener('keydown', firstFocus);
+        last.addEventListener('keydown', firstFocus);
+      }
       this.opened = true;
       this.windowHeight = (0, _lib.getWindowHeight)();
-      first.removeEventListener('keydown', lastFocus);
-      first.addEventListener('keydown', lastFocus);
-      last.removeEventListener('keydown', firstFocus);
-      last.addEventListener('keydown', firstFocus);
       btn.setAttribute('aria-expanded', true);
       (0, _lib.addClass)(btn, 'js-hiraku-offcanvas-btn-active');
       if (direction === 'right') {
