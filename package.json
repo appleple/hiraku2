@@ -4,8 +4,9 @@
   "description": "Drawer Menu jQuery Plugin",
   "author": "appleple",
   "url": "https://www.appleple.com",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "npm run lint && mocha ./test/test.js --timeout 1000000",
+    "test": "npm run lint",
     "lint": "eslint ./src/core/index.js --fix",
     "build:js": "npm-run-all -p build:lib build:jquery build:global",
     "build:lib": "npm run babel",
