@@ -1,6 +1,6 @@
 import scrollToElement from 'scroll-to-element';
 import 'es6-object-assign/auto';
-import { getUniqId, getWindowWidth, getWindowHeight, hasClass, addClass, removeClass, getScrollTop, wrap, after, isIE } from '../lib';
+import { getUniqId, getWindowWidth, getWindowHeight, hasClass, addClass, removeClass, getScrollTop, after, isIE } from '../lib';
 
 const defaults = {
   direction: 'right',
@@ -10,7 +10,7 @@ const defaults = {
   closeLabel: 'Close',
   fixedHeader: '.js-hiraku-fixed-header',
   focusableElements: 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]'
-}
+};
 
 export default class Hiraku {
 
@@ -49,7 +49,7 @@ export default class Hiraku {
     });
     window.addEventListener('touchmove', (e) => {
       this._onTouchMove(e);
-    }, {passive: false});
+    }, { passive: false });
     window.addEventListener('touchend', (e) => {
       this._onTouchEnd(e);
     });
@@ -60,7 +60,7 @@ export default class Hiraku {
   }
 
   open() {
-    const { side, btn, fixed, parentElement, body, isIE } = this;
+    const { side, btn, fixed, body } = this;
     const { direction, focusableElements } = this.opt;
     const elements = side.querySelectorAll(focusableElements);
     const first = elements[0];
@@ -69,12 +69,12 @@ export default class Hiraku {
       if (e.which === 9 && e.shiftKey) {
         last.focus();
       }
-    }
+    };
     const firstFocus = (e) => {
       if (e.which === 9 && !e.shiftKey) {
         first.focus();
       }
-    }
+    };
     this.opened = true;
     this.windowHeight = getWindowHeight();
     first.removeEventListener('keydown', lastFocus);
@@ -89,7 +89,7 @@ export default class Hiraku {
       addClass(body, 'js-hiraku-offcanvas-body-left');
     }
     if (fixed) {
-      if (isIE) {
+      if (this.isIE) {
         fixed.style.transform = `translateX(${side.offsetWidth}px)`;
       } else {
         fixed.style.transform = `translateY(${getScrollTop()}px)`;
@@ -97,19 +97,17 @@ export default class Hiraku {
     }
     this.scrollAmount = 0;
     side.setAttribute('aria-hidden', false);
-    side.style.height = `${getWindowHeight()}px`; 
+    side.style.height = `${getWindowHeight()}px`;
     if (direction === 'right') {
-      if (isIE) {
-        side.style.transform = `translateX(0px)`;
+      if (this.isIE) {
+        side.style.transform = 'translateX(0px)';
       } else {
         side.style.transform = `translateX(100%) translateY(${getScrollTop()}px)`;
       }
+    } else if (this.isIE) {
+      side.style.transform = 'translateX(0px)';
     } else {
-      if (isIE) {
-        side.style.transform = `translateX(0px)`;
-      } else {
-        side.style.transform = `translateX(-100%) translateY(${getScrollTop()}px)`;
-      }
+      side.style.transform = `translateX(-100%) translateY(${getScrollTop()}px)`;
     }
     side.style.marginTop = '0px';
   }
@@ -132,7 +130,7 @@ export default class Hiraku {
       removeClass(btn, 'js-hiraku-offcanvas-btn-active');
       this.opened = false;
       callback();
-    }
+    };
     if (direction === 'right') {
       removeClass(body, 'js-hiraku-offcanvas-body-right');
     } else {
@@ -170,7 +168,7 @@ export default class Hiraku {
     this.vy = y;
   }
 
-  _onTouchEnd(e) {
+  _onTouchEnd() {
     if (this.opened === false) {
       return;
     }
@@ -205,7 +203,7 @@ export default class Hiraku {
   }
 
   _setHirakuSideMenu() {
-    const {side, id} = this;
+    const { side, id } = this;
     const { closeLabel, direction } = this.opt;
     const links = side.querySelectorAll('a');
     after(side, '<div class="js-hiraku-offcanvas"></div>');
@@ -237,7 +235,7 @@ export default class Hiraku {
             const target = document.querySelector(href);
             let offset = 0;
             if (this.fixed) {
-              offset = - this.fixed.offsetHeight;
+              offset = -this.fixed.offsetHeight;
             }
             scrollToElement(target, { offset, duration: 1000 });
           });
@@ -247,7 +245,7 @@ export default class Hiraku {
   }
 
   _setHirakuBtn() {
-    const {btn, id} = this;
+    const { btn, id } = this;
     const { btnLabel } = this.opt;
     addClass(btn, 'js-hiraku-offcanvas-btn');
     btn.setAttribute('aria-expanded', false);
@@ -271,8 +269,8 @@ export default class Hiraku {
 
   _offcanvasClickHandler(e) {
     const { parentElement } = this;
-		if (e.type === 'keyup' && e.keyCode !== 27) {
-			return;
+    if (e.type === 'keyup' && e.keyCode !== 27) {
+      return;
     }
     if (e.target !== parentElement) {
       return;
@@ -300,7 +298,7 @@ export default class Hiraku {
     }
     return { x, y };
   }
-  
+
   _resizeHandler() {
     const windowWidth = getWindowWidth();
     const { body, side, opt } = this;

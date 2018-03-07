@@ -973,9 +973,7 @@ var Hiraku = function () {
       var side = this.side,
           btn = this.btn,
           fixed = this.fixed,
-          parentElement = this.parentElement,
-          body = this.body,
-          isIE = this.isIE;
+          body = this.body;
       var _opt = this.opt,
           direction = _opt.direction,
           focusableElements = _opt.focusableElements;
@@ -1007,7 +1005,7 @@ var Hiraku = function () {
         (0, _lib.addClass)(body, 'js-hiraku-offcanvas-body-left');
       }
       if (fixed) {
-        if (isIE) {
+        if (this.isIE) {
           fixed.style.transform = 'translateX(' + side.offsetWidth + 'px)';
         } else {
           fixed.style.transform = 'translateY(' + (0, _lib.getScrollTop)() + 'px)';
@@ -1017,17 +1015,15 @@ var Hiraku = function () {
       side.setAttribute('aria-hidden', false);
       side.style.height = (0, _lib.getWindowHeight)() + 'px';
       if (direction === 'right') {
-        if (isIE) {
+        if (this.isIE) {
           side.style.transform = 'translateX(0px)';
         } else {
           side.style.transform = 'translateX(100%) translateY(' + (0, _lib.getScrollTop)() + 'px)';
         }
+      } else if (this.isIE) {
+        side.style.transform = 'translateX(0px)';
       } else {
-        if (isIE) {
-          side.style.transform = 'translateX(0px)';
-        } else {
-          side.style.transform = 'translateX(-100%) translateY(' + (0, _lib.getScrollTop)() + 'px)';
-        }
+        side.style.transform = 'translateX(-100%) translateY(' + (0, _lib.getScrollTop)() + 'px)';
       }
       side.style.marginTop = '0px';
     }
@@ -1099,7 +1095,7 @@ var Hiraku = function () {
     }
   }, {
     key: '_onTouchEnd',
-    value: function _onTouchEnd(e) {
+    value: function _onTouchEnd() {
       var _this3 = this;
 
       if (this.opened === false) {
