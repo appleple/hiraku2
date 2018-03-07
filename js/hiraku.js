@@ -5,7 +5,7 @@
  * hiraku:
  *   license: MIT (http://opensource.org/licenses/MIT)
  *   author: appleple
- *   version: 2.0.1
+ *   version: 2.0.2
  *
  * component-clone:
  *   maintainers: jongleberry <jonathanrichardong@gmail.com>
