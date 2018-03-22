@@ -1,7 +1,8 @@
 import scrollToElement from 'scroll-to-element';
 import debounce from 'debounce';
 import 'es6-object-assign/auto';
-import { getUniqId, getWindowWidth, getWindowHeight, hasClass, addClass, removeClass, getScrollTop, after, isIE } from '../lib';
+import 'custom-event-polyfill';
+import { getUniqId, getWindowWidth, getWindowHeight, hasClass, addClass, removeClass, getScrollTop, after, isIE, triggerEvent } from '../lib';
 
 const defaults = {
   direction: 'right',
@@ -51,6 +52,16 @@ export default class Hiraku {
     this._setHirakuBtn();
     this._setHirakuBody();
     this._resizeHandler();
+	}
+
+	fire(eventName) {
+		triggerEvent(this.side, eventName)
+	}
+
+	on(event, fn) {
+    this.side.addEventListener(event, (e) => {
+      fn.call(this, e);
+    });
   }
 
   open() {

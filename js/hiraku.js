@@ -34,6 +34,13 @@
  *   homepage: https://github.com/component/type
  *   version: 1.1.0
  *
+ * custom-event-polyfill:
+ *   license: MIT (http://opensource.org/licenses/MIT)
+ *   maintainers: krambuhl <evan.krambuhl@gmail.com>
+ *   contributors: Frank Panetta, Mikhail Reenko <reenko@yandex.ru>, Joscha Feth <joscha@feth.com>
+ *   homepage: https://github.com/krambuhl/custom-event-polyfill#readme
+ *   version: 0.3.0
+ *
  * debounce:
  *   license: MIT (http://opensource.org/licenses/MIT)
  *   maintainers: defunctzombie <shtylman@gmail.com>, dfcreative <df.creative@gmail.com>, jongleberry <jonathanrichardong@gmail.com>, tootallnate <nathan@tootallnate.net>, clintwood <clint@anotherway.co.za>, thehydroimpulse <dnfagnan@gmail.com>, tjholowaychuk <tj@vision-media.ca>, rauchg <rauchg@gmail.com>, retrofox <rdsuarez@gmail.com>, coreh <thecoreh@gmail.com>, forbeslindesay <forbes@lindesay.co.uk>, kelonye <kelonyemitchel@gmail.com>, yields <yields@icloud.com>, anthonyshort <antshort@gmail.com>, ianstormtaylor <ian@ianstormtaylor.com>, cristiandouce <cristiandouce@gmail.com>, swatinem <arpad.borsos@googlemail.com>, mattmueller <mattmuelle@gmail.com>, stagas <gstagas@gmail.com>, amasad <amjad.masad@gmail.com>, juliangruber <julian@juliangruber.com>, calvinfo <calvin@calv.info>, dominicbarnes <dominic@dbarnes.info>, timoxley <secoif@gmail.com>, stephenmathieson <me@stephenmathieson.com>, trevorgerhardt <trevorgerhardt@gmail.com>, timaschew <timaschew@gmail.com>
@@ -504,7 +511,7 @@ Tween.prototype.update = function(fn){
   this._update = fn;
   return this;
 };
-},{"clone":1,"ease":7,"emitter":2,"type":5}],5:[function(require,module,exports){
+},{"clone":1,"ease":8,"emitter":2,"type":5}],5:[function(require,module,exports){
 /**
  * toString ref.
  */
@@ -541,6 +548,52 @@ module.exports = function(val){
 };
 
 },{}],6:[function(require,module,exports){
+// Polyfill for creating CustomEvents on IE9/10/11
+
+// code pulled from:
+// https://github.com/d4tocchini/customevent-polyfill
+// https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent#Polyfill
+
+try {
+    var ce = new window.CustomEvent('test');
+    ce.preventDefault();
+    if (ce.defaultPrevented !== true) {
+        // IE has problems with .preventDefault() on custom events
+        // http://stackoverflow.com/questions/23349191
+        throw new Error('Could not prevent default');
+    }
+} catch(e) {
+  var CustomEvent = function(event, params) {
+    var evt, origPrevent;
+    params = params || {
+      bubbles: false,
+      cancelable: false,
+      detail: undefined
+    };
+
+    evt = document.createEvent("CustomEvent");
+    evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+    origPrevent = evt.preventDefault;
+    evt.preventDefault = function () {
+      origPrevent.call(this);
+      try {
+        Object.defineProperty(this, 'defaultPrevented', {
+          get: function () {
+            return true;
+          }
+        });
+      } catch(e) {
+        this.defaultPrevented = true;
+      }
+    };
+    return evt;
+  };
+
+  CustomEvent.prototype = window.Event.prototype;
+  window.CustomEvent = CustomEvent; // expose definition to window
+}
+
+},{}],7:[function(require,module,exports){
 /**
  * Returns a function, that, as long as it continues to be invoked, will not
  * be triggered. The function will be called after it stops being called for
@@ -608,7 +661,7 @@ module.exports = function debounce(func, wait, immediate){
   return debounced;
 };
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 
 // easing functions from "Tween.js"
 
@@ -780,12 +833,12 @@ exports['in-bounce'] = exports.inBounce;
 exports['out-bounce'] = exports.outBounce;
 exports['in-out-bounce'] = exports.inOutBounce;
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 
 require('./index').polyfill();
 
-},{"./index":9}],9:[function(require,module,exports){
+},{"./index":10}],10:[function(require,module,exports){
 /**
  * Code refactored from Mozilla Developer Network:
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
@@ -833,7 +886,7 @@ module.exports = {
   polyfill: polyfill
 };
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 var scroll = require('scroll-to');
 
 function calculateScrollOffset(elem, additionalOffset, alignment) {
@@ -867,7 +920,7 @@ module.exports = function (elem, options) {
   if (elem) return scroll(0, calculateScrollOffset(elem, options.offset, options.align), options);
 };
 
-},{"scroll-to":11}],11:[function(require,module,exports){
+},{"scroll-to":12}],12:[function(require,module,exports){
 /**
  * Module dependencies.
  */
@@ -935,7 +988,7 @@ function scroll() {
   return { top: y, left: x };
 }
 
-},{"raf":3,"tween":4}],12:[function(require,module,exports){
+},{"raf":3,"tween":4}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -953,6 +1006,8 @@ var _debounce = require('debounce');
 var _debounce2 = _interopRequireDefault(_debounce);
 
 require('es6-object-assign/auto');
+
+require('custom-event-polyfill');
 
 var _lib = require('../lib');
 
@@ -1014,6 +1069,20 @@ var Hiraku = function () {
   }
 
   _createClass(Hiraku, [{
+    key: 'fire',
+    value: function fire(eventName) {
+      (0, _lib.triggerEvent)(this.side, eventName);
+    }
+  }, {
+    key: 'on',
+    value: function on(event, fn) {
+      var _this2 = this;
+
+      this.side.addEventListener(event, function (e) {
+        fn.call(_this2, e);
+      });
+    }
+  }, {
     key: 'open',
     value: function open() {
       if (this.opened === true) {
@@ -1082,7 +1151,7 @@ var Hiraku = function () {
   }, {
     key: 'close',
     value: function close() {
-      var _this2 = this;
+      var _this3 = this;
 
       var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
 
@@ -1108,7 +1177,7 @@ var Hiraku = function () {
         side.style.transform = '';
         side.setAttribute('aria-hidden', true);
         (0, _lib.removeClass)(btn, 'js-hiraku-offcanvas-btn-active');
-        _this2.opened = false;
+        _this3.opened = false;
         callback();
       };
       if (direction === 'right') {
@@ -1152,7 +1221,7 @@ var Hiraku = function () {
   }, {
     key: '_onTouchEnd',
     value: function _onTouchEnd() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.opened === false) {
         return;
@@ -1161,27 +1230,27 @@ var Hiraku = function () {
       var registance = 0.4;
 
       var interval = function interval() {
-        if (_this3.vy > 0) {
-          _this3.vy -= registance;
+        if (_this4.vy > 0) {
+          _this4.vy -= registance;
         }
-        if (_this3.vy < 0) {
-          _this3.vy += registance;
+        if (_this4.vy < 0) {
+          _this4.vy += registance;
         }
-        if (Math.abs(_this3.vy) < registance) {
+        if (Math.abs(_this4.vy) < registance) {
           return;
         }
-        _this3.scrollAmount += _this3.vy;
-        if (_this3.scrollAmount < -limitHeight) {
-          _this3.scrollAmount = -limitHeight;
-          _this3.side.style.marginTop = _this3.scrollAmount + 'px';
+        _this4.scrollAmount += _this4.vy;
+        if (_this4.scrollAmount < -limitHeight) {
+          _this4.scrollAmount = -limitHeight;
+          _this4.side.style.marginTop = _this4.scrollAmount + 'px';
           return;
         }
-        if (_this3.scrollAmount > 0) {
-          _this3.scrollAmount = 0;
-          _this3.side.style.marginTop = _this3.scrollAmount + 'px';
+        if (_this4.scrollAmount > 0) {
+          _this4.scrollAmount = 0;
+          _this4.side.style.marginTop = _this4.scrollAmount + 'px';
           return;
         }
-        _this3.side.style.marginTop = _this3.scrollAmount + 'px';
+        _this4.side.style.marginTop = _this4.scrollAmount + 'px';
         window.requestAnimationFrame(interval);
       };
       window.requestAnimationFrame(interval);
@@ -1189,7 +1258,7 @@ var Hiraku = function () {
   }, {
     key: '_setHirakuSideMenu',
     value: function _setHirakuSideMenu() {
-      var _this4 = this;
+      var _this5 = this;
 
       var side = this.side,
           id = this.id;
@@ -1210,29 +1279,29 @@ var Hiraku = function () {
       side.setAttribute('aria-label', closeLabel);
       this.parentElement = side.nextElementSibling;
       this.parentElement.addEventListener('click', function (e) {
-        _this4._offcanvasClickHandler(e);
+        _this5._offcanvasClickHandler(e);
       });
       this.parentElement.addEventListener('touchstart', function (e) {
-        _this4._offcanvasClickHandler(e);
+        _this5._offcanvasClickHandler(e);
       });
       this.parentElement.addEventListener('keyup', function (e) {
-        _this4._offcanvasClickHandler(e);
+        _this5._offcanvasClickHandler(e);
       });
       [].forEach.call(links, function (link) {
         link.addEventListener('click', function (e) {
           var href = link.getAttribute('href');
           if (href.charAt(0) === '#') {
             e.preventDefault();
-            _this4.close(function () {
-              _this4.opened = true;
+            _this5.close(function () {
+              _this5.opened = true;
               var target = document.querySelector(href);
               var offset = 0;
-              if (_this4.fixed) {
-                offset = -_this4.fixed.offsetHeight;
+              if (_this5.fixed) {
+                offset = -_this5.fixed.offsetHeight;
               }
               (0, _scrollToElement2.default)(target, { offset: offset, duration: 1000 });
               setTimeout(function () {
-                _this4.opened = false;
+                _this5.opened = false;
               }, 1000);
             });
           }
@@ -1242,7 +1311,7 @@ var Hiraku = function () {
   }, {
     key: '_setHirakuBtn',
     value: function _setHirakuBtn() {
-      var _this5 = this;
+      var _this6 = this;
 
       var btn = this.btn,
           id = this.id;
@@ -1254,7 +1323,7 @@ var Hiraku = function () {
       btn.setAttribute('aria-controls', id);
       btn.setAttribute('id', 'hiraku-offcanvas-btn-' + id);
       btn.addEventListener('click', function () {
-        _this5.open();
+        _this6.open();
       });
     }
   }, {
@@ -1333,12 +1402,12 @@ var Hiraku = function () {
 exports.default = Hiraku;
 module.exports = exports['default'];
 
-},{"../lib":14,"debounce":6,"es6-object-assign/auto":8,"scroll-to-element":10}],13:[function(require,module,exports){
+},{"../lib":15,"custom-event-polyfill":6,"debounce":7,"es6-object-assign/auto":9,"scroll-to-element":11}],14:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./core/');
 
-},{"./core/":12}],14:[function(require,module,exports){
+},{"./core/":13}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1406,5 +1475,16 @@ var isIE = exports.isIE = function isIE() {
   return false;
 };
 
-},{}]},{},[13])(13)
+var triggerEvent = exports.triggerEvent = function triggerEvent(el, eventName, options) {
+  var event = void 0;
+  if (window.CustomEvent) {
+    event = new CustomEvent(eventName, { cancelable: true });
+  } else {
+    event = document.createEvent('CustomEvent');
+    event.initCustomEvent(eventName, false, false, options);
+  }
+  el.dispatchEvent(event);
+};
+
+},{}]},{},[14])(14)
 });
