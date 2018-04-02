@@ -118,6 +118,36 @@ new Hiraku(".offcanvas-right", {
 });
 ```
 
+### open/close methods
+
+```js
+var hiraku = new Hiraku(".offcanvas-right", {
+  btn: "#offcanvas-btn-right",
+  fixedHeader: "#header",
+  direction: "right",
+  width: '100px' // default 70%
+});
+hiraku.open(); // open offcanvas;
+hiraku.close(); // close offcanvas;
+```
+
+### open/close events
+
+```js
+var hiraku = new Hiraku(".offcanvas-right", {
+  btn: "#offcanvas-btn-right",
+  fixedHeader: "#header",
+  direction: "right",
+  width: '100px' // default 70%
+});
+hiraku.on('open', function(){
+  // this will be executed when the offcanvas opened
+});
+hiraku.on('close', function(){
+  // this will be executed when the offcanvas closed
+});
+```
+
 ## Download
 
 You can download from here.
