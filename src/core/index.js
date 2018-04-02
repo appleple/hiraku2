@@ -93,7 +93,8 @@ export default class Hiraku {
       last.removeEventListener('keydown', firstFocus);
       last.addEventListener('keydown', firstFocus);
     }
-    this.opened = true;
+		this.opened = true;
+		this._fireEvent('open');
     this.windowHeight = getWindowHeight();
     btn.setAttribute('aria-expanded', true);
     addClass(btn, 'js-hiraku-offcanvas-btn-active');
@@ -145,8 +146,10 @@ export default class Hiraku {
       side.style.transform = '';
       side.setAttribute('aria-hidden', true);
       removeClass(btn, 'js-hiraku-offcanvas-btn-active');
-      this.opened = false;
-      callback();
+			this.opened = false;
+			this._fireEvent('close');
+			callback();
+			this._fi
     };
     if (direction === 'right') {
       removeClass(body, 'js-hiraku-offcanvas-body-right');
@@ -336,6 +339,10 @@ export default class Hiraku {
       y = e.pageY;
     }
     return { x, y };
+	}
+
+	_fireEvent(eventName) {
+    triggerEvent(this.side, eventName);
   }
 
   _resizeHandler() {

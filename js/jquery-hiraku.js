@@ -1144,6 +1144,7 @@ var Hiraku = function () {
         last.addEventListener('keydown', firstFocus);
       }
       this.opened = true;
+      this._fireEvent('open');
       this.windowHeight = (0, _lib.getWindowHeight)();
       btn.setAttribute('aria-expanded', true);
       (0, _lib.addClass)(btn, 'js-hiraku-offcanvas-btn-active');
@@ -1205,7 +1206,9 @@ var Hiraku = function () {
         side.setAttribute('aria-hidden', true);
         (0, _lib.removeClass)(btn, 'js-hiraku-offcanvas-btn-active');
         _this3.opened = false;
+        _this3._fireEvent('close');
         callback();
+        _this3._fi;
       };
       if (direction === 'right') {
         (0, _lib.removeClass)(body, 'js-hiraku-offcanvas-body-right');
@@ -1407,6 +1410,11 @@ var Hiraku = function () {
         y = e.pageY;
       }
       return { x: x, y: y };
+    }
+  }, {
+    key: '_fireEvent',
+    value: function _fireEvent(eventName) {
+      (0, _lib.triggerEvent)(this.side, eventName);
     }
   }, {
     key: '_resizeHandler',
