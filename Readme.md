@@ -113,8 +113,8 @@ new Hiraku(".offcanvas-right", {
 new Hiraku(".offcanvas-right", {
   btn: "#offcanvas-btn-right",
   fixedHeader: "#header",
-	direction: "right",
-	width: '100px' // default 70%
+  direction: "right",
+  width: '100px' // default 70%
 });
 ```
 
