@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>hiraku.js - Offcanvas Menu Plugin made with love by appleple</title>
+  <meta name="description" content="hiraku.js is a JavaScript library to create additional space especially for mobile layout.">
+  <meta name="author" content="appleple">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/uny@latest/dist/css/uny.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/uny@latest/dist/css/uny-dark.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <style>
+    .fa {
+      margin-right: .25em;
+    }
+    .button.is-icon .fa,
+    .button.is-round .fa {
+      margin-right: 0;
+    }
+    .header .menu {
+      margin-left: auto;
+      margin-right: 2.5rem;
+    }
+    .uny-logo:before {
+      content: "hiraku";
+      font-size: 4rem;
+      line-height: 1;
+      color: #fff;
+      font-weight: 300;
+    }
+    @media screen and (min-width: 768px) {
+      .uny-logo:before {
+        font-size: 6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header is-sticky">
+    <h1 class="logo is-medium">hiraku</h1>
+    <nav class="header-menu">
+      <div class="pulldown">
+        <a href="javascript:void(0);">Language <i class="fa fa-angle-down"></i></a>
+        <div class="pulldown-content">
+          <a href="./" class="button is-list">English</a>
+          <a href="./index_ja.html" class="button is-list">日本語</a>
+        </div>
+      </div>
+      <div class="pulldown">
+        <a href="javascript:void(0);">Document</a>
+        <div class="pulldown-content">
+          <p>Coming soon ;)</p>
+        </div>
+      </div>
+      <div class="pulldown">
+        <a href="javascript:void(0);">Theme</a>
+        <div class="pulldown-content">
+          <p>Coming soon ;)</p>
+        </div>
+      </div>
+      <a href="https://github.com/unys/uny" class="button is-white is-small"><i class="fa fa-github"></i> GitHub</a>
+      <a href="https://github.com/unys/uny/archive/master.zip" class="button is-small"><i class="fa fa-download"></i> Download</a>
+    </nav>
+    <button class="button is-burger hide-on-medium hide-on-large offcanvas-open">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <div class="hero is-center is-gradation">
+		<img src="./images/logo_hiraku.svg" style="width:100px;">
+    <div class="uny-logo"></div>
+    <p class="type-h2">A JavaScript library to create additional space<br> especially for mobile layout.</p>
+    <p><a href="https://github.com/unys/uny/archive/master.zip" class="button is-white is-medium"><i class="fa fa-download"></i> Download</a></p>
+  </div>
+
+  <main class="main">
+    <div class="content">
+      <section class="section">
+        <div class="inner is-small">
+          <h2><i class="fa fa-check"></i> Feature</h2>
+					<ul>
+						<li>Not affected by the DOM structure.</li>
+						<li>Enable to open both right and left side menu.</li>
+						<li>Main canvas is not scrolled, while scrolling Offcanvas-menu.</li>
+						<li>Easy to control the movement</li>
+						<li>Accessible for keyboard navigation and screen readers.</li>
+					</ul>
+        </div>
+      </section>
+
+      <section class="section is-center is-gradation">
+        <div class="inner">
+          <h2>Learn more</h2>
+          <p>If you want to check all the components included in version 0.1 (beta version), <br>please see the following page.</p>
+          <p><a href="./demos/" class="button is-ghost-white is-medium"><i class="fa fa-arrow-right"></i> Demos</a></p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="inner is-small">
+          <h2><i class="fa fa-bolt"></i> Quick start</h2>
+          <h3>Using CDN</h3>
+          <p>In addition to downloading and loading CSS and JS files, <br>you can easily start by using CDN.</p>
+          <p>Add the following description in the <code>&lt;head&gt;</code> tag of the web page you want to use UNY.</p>
+          <pre><code class="html">&lt;link rel="stylesheet" href="https://unpkg.com/uny@latest/dist/css/uny.min.css"&gt;
+&lt;script src="https://unpkg.com/uny@latest/dist/js/uny.min.js"&gt;&lt;/script&gt;</code></pre>
+          <p>Write the HTML tag of the component you want to use.</p>
+          <pre><code class="html">&lt;div class="card"&gt;
+  &lt;div class="card-image" style="background-image: url(https://source.unsplash.com/random);"&gt;&lt;/div&gt;
+  &lt;h3&gt;Heading&lt;/h3&gt;
+  &lt;p&gt;Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae, debitis.&lt;/p&gt;
+  &lt;p&gt;&lt;a href="#" class="button"&gt;Download&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+          <p>This alone displays the card type component with the image embedded 🎉</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="inner is-small">
+          <h2><i class="fa fa-book"></i> Document</h2>
+          <p>Usage, introduction of other functions, component introduction etc. <br>are described in detail in the document. <br>Two kinds of documents are prepared, English and Japanese.</p>
+          <p><a href="#" class="button is-disabled"><i class="fa fa-book"></i> Coming soon ;)</a></p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="inner is-small">
+          <h2><i class="fa fa-github"></i> View on GitHub</h2>
+          <p>UNY was developed by <a href="https://twitter.com/kokushing">@kokushing</a> and is open source (MIT license) on GitHub.<br>Please send us feedback, requests, bug reports and pull requests!</p>
+          <p>If you like it, please press Star ;)</p>
+          <p><a href="https://github.com/unys/uny" class="button"><i class="fa fa-github"></i> GitHub page</a></p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="inner">
+      <div class="logo is-medium">UNY <small>Beta</small></div>
+      <div class="margin-left-small margin-right-small">
+        <p>A modern CSS framework. <br>UNY is provided with <a href="https://github.com/unys/uny/blob/master/LICENSE">MIT license.</a> Made by @kokushin &hearts; OSS</p>
+        <p>Icon fonts by Font Awesome, Photo by Unsplash</p>
+      </div>
+      <small class="copyright">&copy; 2017 UNY</small>
+    </div>
+	</footer>
+
+<!--
+  <div class="offcanvas">
+    <div class="offcanvas-overlay offcanvas-close"></div>
+    <div class="offcanvas-content">
+      <button class="button is-close offcanvas-close">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="inner">
+        <div class="offcanvas-menu">
+          <a class="is-current" href="./">English</a>
+          <a href="./index_ja.html">日本語</a>
+          <hr>
+          <a href="https://github.com/unys/uny" class="button is-white is-small"><i class="fa fa-github"></i> GitHub</a>
+          <a href="https://github.com/unys/uny/archive/master.zip" class="button is-small"><i class="fa fa-download"></i> Download</a>
+          <hr>
+          <p>version 0.2-beta</p>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <script src="https://unpkg.com/uny@latest/dist/js/uny.min.js"></script>
+</body>
+</html>
