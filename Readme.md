@@ -107,45 +107,16 @@ new Hiraku(".offcanvas-right", {
 });
 ```
 
-
-## CSS Customize
-
-If you don't want to move the main contents, When opening the Offcanvas-menu.
-
-By default, main contents will be pressed out. But if you want to fix main contents, you will overwrite hiraku.css like below
-
-```css
-.js-hiraku-offcanvas-body-right .js-hiraku-header-fixed {
-  margin-left: -70%;
-}
-
-.js-hiraku-offcanvas-body-left .js-hiraku-header-fixed {
-  margin-left: 70%;
-}
-
-.js-hiraku-offcanvas-body-right {
-  left: 0;
-}
-
-.js-hiraku-offcanvas-body-left {
-  left: 0;
-}
-```
-
-
 ### Specify the width of the Offcanvas-menu in pixels
 
-By default, width of the Offcanvas-menu is 70% of the screen size. But you may want to change the size of the menu when using tablets. Then you can overwrite hiraku.css like below.
-
-
-### Customize hiraku.css via hiraku.scss
-
-You can change its width by changing the variable on hiraku.scss. You can also change its transition speed with it.
-
-| Variable | Description |
-|-----------|----------------------------------------------------------------|
-| $side-menu-width | Width of the Offcanvas-menu (default： 70%) |
-| $animation | Transition speeed and type (default: 0.3s ease-in-out) |
+```js
+new Hiraku(".offcanvas-right", {
+  btn: "#offcanvas-btn-right",
+  fixedHeader: "#header",
+	direction: "right",
+	width: '100px' // default 70%
+});
+```
 
 ## Download
 
