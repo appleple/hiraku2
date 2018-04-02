@@ -1047,6 +1047,7 @@ var defaults = {
   btnLabel: 'Menu',
   closeLabel: 'Close',
   fixedHeader: '.js-hiraku-fixed-header',
+  width: '70%',
   focusableElements: 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]'
 };
 
@@ -1087,6 +1088,7 @@ var Hiraku = function () {
     window.addEventListener('touchend', function (e) {
       _this._onTouchEnd(e);
     });
+    this._setOffcanvasWidth(this.opt.width);
     this._setHirakuSideMenu();
     this._setHirakuBtn();
     this._setHirakuBody();
@@ -1279,6 +1281,16 @@ var Hiraku = function () {
         window.requestAnimationFrame(interval);
       };
       window.requestAnimationFrame(interval);
+    }
+  }, {
+    key: '_setOffcanvasWidth',
+    value: function _setOffcanvasWidth(width) {
+      if (!document.querySelector('#style-' + this.id)) {
+        (0, _lib.append)(this.body, '<style id="style-' + this.id + '"></style>');
+      }
+      var style = document.querySelector('#style-' + this.id);
+      var html = '\n\t\t.js-hiraku-offcanvas-sidebar-right,\n\t\t.js-hiraku-offcanvas-sidebar-left {\n\t\t\twidth: ' + width + ' !important;\n\t\t}\n\t\t.js-hiraku-offcanvas-body-right {\n\t\t\ttransform: translateX(-' + width + ') !important;\n\t\t}\n\t\t.js-hiraku-offcanvas-body-left {\n\t\t\ttransform: translateX(' + width + ') !important;\n\t\t}\n\t\t';
+      style.innerHTML = html;
     }
   }, {
     key: '_setHirakuSideMenu',
@@ -1509,6 +1521,14 @@ var triggerEvent = exports.triggerEvent = function triggerEvent(el, eventName, o
     event.initCustomEvent(eventName, false, false, options);
   }
   el.dispatchEvent(event);
+};
+
+var append = exports.append = function append(element, string) {
+  var div = document.createElement('div');
+  div.innerHTML = string;
+  while (div.children.length > 0) {
+    element.appendChild(div.children[0]);
+  }
 };
 
 },{}]},{},[13]);

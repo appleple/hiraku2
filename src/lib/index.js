@@ -70,3 +70,11 @@ export const triggerEvent = (el, eventName, options) => {
   }
   el.dispatchEvent(event);
 }
+
+export const append = (element,　string) => {
+	const div = document.createElement('div');
+	div.innerHTML = string;
+	while (div.children.length > 0) {
+		element.appendChild(div.children[0]);
+	}
+}

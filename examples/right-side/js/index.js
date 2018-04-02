@@ -9,6 +9,7 @@ $(function(){
     btn: ".js-offcanvas-btn",
     fixedHeader: ".js-fixed-header",
     direction: "right",
-    breakpoint: 767
+		breakpoint: 767,
+		width: '100px'
   });
 });

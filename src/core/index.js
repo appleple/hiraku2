@@ -2,7 +2,8 @@ import scrollToElement from 'scroll-to-element';
 import debounce from 'debounce';
 import 'es6-object-assign/auto';
 import 'custom-event-polyfill';
-import { getUniqId, getWindowWidth, getWindowHeight, hasClass, addClass, removeClass, getScrollTop, after, isIE, triggerEvent } from '../lib';
+import { getUniqId, getWindowWidth, getWindowHeight, hasClass,
+	addClass, removeClass, getScrollTop, after, isIE, triggerEvent, append } from '../lib';
 
 const defaults = {
   direction: 'right',
@@ -10,7 +11,8 @@ const defaults = {
   btn: '.js-hiraku-offcanvas-btn',
   btnLabel: 'Menu',
   closeLabel: 'Close',
-  fixedHeader: '.js-hiraku-fixed-header',
+	fixedHeader: '.js-hiraku-fixed-header',
+	width: '70%',
   focusableElements: 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]'
 };
 
@@ -47,7 +49,8 @@ export default class Hiraku {
     }, { passive: false });
     window.addEventListener('touchend', (e) => {
       this._onTouchEnd(e);
-    });
+		});
+		this._setOffcanvasWidth(this.opt.width);
     this._setHirakuSideMenu();
     this._setHirakuBtn();
     this._setHirakuBody();
@@ -214,7 +217,27 @@ export default class Hiraku {
       window.requestAnimationFrame(interval);
     };
     window.requestAnimationFrame(interval);
-  }
+	}
+
+	_setOffcanvasWidth(width) {
+		if (!document.querySelector(`#style-${this.id}`)) {
+			append(this.body, `<style id="style-${this.id}"></style>`);
+		}
+		const style = document.querySelector(`#style-${this.id}`);
+		const html = `
+		.js-hiraku-offcanvas-sidebar-right,
+		.js-hiraku-offcanvas-sidebar-left {
+			width: ${width} !important;
+		}
+		.js-hiraku-offcanvas-body-right {
+			transform: translateX(-${width}) !important;
+		}
+		.js-hiraku-offcanvas-body-left {
+			transform: translateX(${width}) !important;
+		}
+		`;
+		style.innerHTML = html;
+	}
 
   _setHirakuSideMenu() {
     const { side, id } = this;
