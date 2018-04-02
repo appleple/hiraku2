@@ -11,8 +11,8 @@ const defaults = {
   btn: '.js-hiraku-offcanvas-btn',
   btnLabel: 'Menu',
   closeLabel: 'Close',
-	fixedHeader: '.js-hiraku-fixed-header',
-	width: '70%',
+  fixedHeader: '.js-hiraku-fixed-header',
+  width: '70%',
   focusableElements: 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]'
 };
 
@@ -39,7 +39,7 @@ export default class Hiraku {
       addClass(this.fixed, 'js-hiraku-fixed');
     }
     window.addEventListener('resize', debounce(() => {
-        this._resizeHandler();
+      this._resizeHandler();
     }, 200));
     window.addEventListener('touchstart', (e) => {
       this._onTouchStart(e);
@@ -49,19 +49,19 @@ export default class Hiraku {
     }, { passive: false });
     window.addEventListener('touchend', (e) => {
       this._onTouchEnd(e);
-		});
-		this._setOffcanvasWidth(this.opt.width);
+    });
+    this._setOffcanvasWidth(this.opt.width);
     this._setHirakuSideMenu();
     this._setHirakuBtn();
     this._setHirakuBody();
     this._resizeHandler();
-	}
+  }
 
-	fire(eventName) {
-		triggerEvent(this.side, eventName)
-	}
+  fire(eventName) {
+    triggerEvent(this.side, eventName);
+  }
 
-	on(event, fn) {
+  on(event, fn) {
     this.side.addEventListener(event, (e) => {
       fn.call(this, e);
     });
@@ -93,8 +93,8 @@ export default class Hiraku {
       last.removeEventListener('keydown', firstFocus);
       last.addEventListener('keydown', firstFocus);
     }
-		this.opened = true;
-		this._fireEvent('open');
+    this.opened = true;
+    this._fireEvent('open');
     this.windowHeight = getWindowHeight();
     btn.setAttribute('aria-expanded', true);
     addClass(btn, 'js-hiraku-offcanvas-btn-active');
@@ -146,10 +146,9 @@ export default class Hiraku {
       side.style.transform = '';
       side.setAttribute('aria-hidden', true);
       removeClass(btn, 'js-hiraku-offcanvas-btn-active');
-			this.opened = false;
-			this._fireEvent('close');
-			callback();
-			this._fi
+      this.opened = false;
+      this._fireEvent('close');
+      callback();
     };
     if (direction === 'right') {
       removeClass(body, 'js-hiraku-offcanvas-body-right');
@@ -220,14 +219,14 @@ export default class Hiraku {
       window.requestAnimationFrame(interval);
     };
     window.requestAnimationFrame(interval);
-	}
+  }
 
-	_setOffcanvasWidth(width) {
-		if (!document.querySelector(`#style-${this.id}`)) {
-			append(this.body, `<style id="style-${this.id}"></style>`);
-		}
-		const style = document.querySelector(`#style-${this.id}`);
-		const html = `
+  _setOffcanvasWidth(width) {
+    if (!document.querySelector(`#style-${this.id}`)) {
+      append(this.body, `<style id="style-${this.id}"></style>`);
+    }
+    const style = document.querySelector(`#style-${this.id}`);
+    const html = `
 		.js-hiraku-offcanvas-sidebar-right,
 		.js-hiraku-offcanvas-sidebar-left {
 			width: ${width} !important;
@@ -239,8 +238,8 @@ export default class Hiraku {
 			transform: translateX(${width}) !important;
 		}
 		`;
-		style.innerHTML = html;
-	}
+    style.innerHTML = html;
+  }
 
   _setHirakuSideMenu() {
     const { side, id } = this;
@@ -339,9 +338,9 @@ export default class Hiraku {
       y = e.pageY;
     }
     return { x, y };
-	}
+  }
 
-	_fireEvent(eventName) {
+  _fireEvent(eventName) {
     triggerEvent(this.side, eventName);
   }
 
