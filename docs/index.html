@@ -39,7 +39,6 @@
         font-size: 6rem;
       }
     }
-		.button.is-burger span,
 		.button.is-close span {
 			background-color: #333;
 		}
@@ -61,7 +60,7 @@
       <a href="https://github.com/appleple/hiraku2" class="button is-white is-small"><i class="fa fa-github"></i> GitHub</a>
       <a href="https://github.com/appleple/hiraku2/archive/master.zip" class="button is-small"><i class="fa fa-download"></i> Download</a>
     </nav>
-    <button class="button is-burger hide-on-medium hide-on-large offcanvas-open">
+    <button class="button is-burger hide-on-medium hide-on-large offcanvas-open js-sp-open">
       <span></span>
       <span></span>
       <span></span>
@@ -121,7 +120,8 @@ new Hiraku('.js-hiraku');</code></pre>
 					<div class="inner">
 						<h2>Learn more</h2>
 						<p>If you want to know more about hiraku, please go to the below link.</p>
-						<p><a href="./more.html" class="button is-ghost-white is-medium"><i class="fa fa-arrow-right"></i>Document</a></p>
+						<p>Comming soon...</p>
+						<p><a href="#" class="button is-ghost-white is-medium"><i class="fa fa-arrow-right"></i>Document</a></p>
 					</div>
 				</section>
 
@@ -152,7 +152,7 @@ new Hiraku('.js-hiraku');</code></pre>
   <div class="js-offcanvas">
       <div class="inner">
 				<div style="text-align:right;padding:10px;">
-					<button class="button is-close" style="color:#333;">
+					<button class="button is-close js-hiraku-right-close-btn" style="color:#333;">
 						<span></span>
 						<span></span>
 						<span></span>
@@ -173,7 +173,7 @@ new Hiraku('.js-hiraku');</code></pre>
   <div class="js-offcanvas-left">
       <div class="inner">
 				<div style="text-align:right;padding:10px;">
-					<button class="button is-close" style="color:#333;">
+					<button class="button is-close js-hiraku-left-close-btn" style="color:#333;">
 						<span></span>
 						<span></span>
 						<span></span>
@@ -191,19 +191,24 @@ new Hiraku('.js-hiraku');</code></pre>
     </div>
   </div>
 
-	<script src="https://unpkg.com/hiraku@2.1.0/js/hiraku.js"></script>
+	<script src="https://unpkg.com/hiraku@2.1.1/js/hiraku.js"></script>
 	<script>
-	new Hiraku('.js-offcanvas', {
+	var right = new Hiraku('.js-offcanvas', {
 		btn: '.js-hiraku-btn',
+		closeBtn: '.js-hiraku-right-close-btn',
 		fixedHeader: '.js-header',
 		direction: 'right',
-		width: '40%'
+		width: '60%'
 	});
 	new Hiraku('.js-offcanvas-left', {
 		btn: '.js-hiraku-left-btn',
+		closeBtn: '.js-hiraku-left-close-btn',
 		fixedHeader: '.js-header',
 		direction: 'left',
-		width: '40%'
+		width: '60%'
+	});
+	document.querySelector('.js-sp-open').addEventListener('click', function(){
+		right.open();
 	});
 	</script>
 </body>
