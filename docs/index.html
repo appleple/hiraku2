@@ -39,19 +39,19 @@
         font-size: 6rem;
       }
     }
+		.button.is-burger span,
+		.button.is-close span {
+			background-color: #333;
+		}
+		.button.is-close {
+			display: inline-block;
+		}
   </style>
 </head>
 <body>
   <header class="header is-sticky js-header">
     <h1 class="logo is-medium">hiraku</h1>
     <nav class="header-menu">
-      <div class="pulldown">
-        <a href="javascript:void(0);">Language <i class="fa fa-angle-down"></i></a>
-        <div class="pulldown-content">
-          <a href="./" class="button is-list">English</a>
-          <a href="./index_ja.html" class="button is-list">日本語</a>
-        </div>
-      </div>
       <div class="pulldown">
         <a href="javascript:void(0);">Document</a>
         <div class="pulldown-content">
@@ -68,7 +68,7 @@
     </button>
   </header>
 
-  <div class="hero is-center is-gradation">
+  <div class="hero is-center is-gradation" id="download">
 		<img src="./images/logo_hiraku.svg" style="width:100px;">
     <div class="uny-logo"></div>
     <p class="type-h2">A JavaScript library to create additional space<br> especially for mobile layout.</p>
@@ -78,14 +78,15 @@
   <main class="main">
     <div class="content">
 
-			<section class="section is-center">
+			<section class="section is-center" id="demo">
 				<div class="inner">
 					<h2>Demo</h2>
+					<p>Press to open the offcanvas menu</p>
 					<p><button class="button js-hiraku-btn">Open</button></p>
 				</div>
 			</section>
 
-      <section class="section is-gray">
+      <section class="section is-gray" id="feature">
         <div class="inner is-small">
           <h2><i class="fa fa-check"></i> Feature</h2>
 					<ul>
@@ -98,29 +99,33 @@
         </div>
 			</section>
 
-      <section class="section">
+      <section class="section" id="quick_start">
         <div class="inner is-small">
-          <h2><i class="fa fa-bolt"></i> Quick start</h2>
+          <h2><i class="fa fa-bolt"></i>Quick start</h2>
           <h3>Using CDN</h3>
           <p>In addition to downloading and loading CSS and JS files, <br>you can easily start by using CDN.</p>
           <p>Add the following description in the <code>&lt;head&gt;</code> tag of the web page you want to use hiraku.</p>
           <pre><code class="html">&lt;link rel="stylesheet" href="https://unpkg.com/hiraku@latest/css/hiraku.min.css"&gt;
 &lt;script src="https://unpkg.com/hiraku@latest/js/hiraku.min.js"&gt;&lt;/script&gt;</code></pre>
           <!-- <p>Write the HTML tag of the component you want to use.</p> -->
-
+					<h3>Using npm</h3>
+					<pre><code class="shell">npm install hiraku --save</code></pre>
+					<h3>Can bundle with Webpack/Browserify</h3>
+					<pre><code class="javascript">import Hiraku from 'hiraku';
+new Hiraku('.js-hiraku');</code></pre>
         </div>
 			</section>
 
-      <section class="section is-center is-gradation">
+      <section class="section is-center is-gradation" id="learn_more">
 					<div class="inner">
 						<h2>Learn more</h2>
 						<p>If you want to know more about hiraku, please go to the below link.</p>
-						<p><a href="./demos/" class="button is-ghost-white is-medium"><i class="fa fa-arrow-right"></i> Demos</a></p>
+						<p><a href="./more.html" class="button is-ghost-white is-medium"><i class="fa fa-arrow-right"></i>Document</a></p>
 					</div>
 				</section>
 
 
-      <section class="section">
+      <section class="section" id="view_on_github">
         <div class="inner is-small">
           <h2><i class="fa fa-github"></i> View on GitHub</h2>
           <p>hiraku was developed by <a href="https://twitter.com/appleplecom">@appleplecom</a> and is open source (MIT license) on GitHub.<br>Please send us feedback, requests, bug reports and pull requests!</p>
@@ -145,8 +150,21 @@
 
   <div class="js-offcanvas">
       <div class="inner">
+				<div style="text-align:right;padding:10px;">
+					<button class="button is-close" style="color:#333;">
+						<span></span>
+						<span></span>
+						<span></span>
+					</button>
+				</div>
+				<div class="logo is-small is-center" style="color:#333;">MENU</div>
         <div class="offcanvas-menu">
-
+					<a href="#download">Download</a>
+					<a href="#demo">Demo</a>
+					<a href="#feature">Feature</a>
+					<a href="#quick_start">Quick Start</a>
+					<a href="#learn_more">Learn More</a>
+					<a href="#view_on_github">View on Github</a>
         </div>
     </div>
   </div>
@@ -156,7 +174,8 @@
 	new Hiraku('.js-offcanvas', {
 		btn: '.js-hiraku-btn',
 		fixedHeader: '.js-header',
-		direction: 'right'
+		direction: 'right',
+		width: '30%'
 	});
 	</script>
 </body>
