@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://unpkg.com/uny@latest/dist/css/uny.min.css">
   <link rel="stylesheet" href="https://unpkg.com/uny@latest/dist/css/uny-dark.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css" rel="stylesheet">
-
+	<link rel="stylesheet" href="https://unpkg.com/hiraku@2.1.0/css/hiraku.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
@@ -42,7 +42,7 @@
   </style>
 </head>
 <body>
-  <header class="header is-sticky">
+  <header class="header is-sticky js-header">
     <h1 class="logo is-medium">hiraku</h1>
     <nav class="header-menu">
       <div class="pulldown">
@@ -77,7 +77,15 @@
 
   <main class="main">
     <div class="content">
-      <section class="section">
+
+			<section class="section is-center">
+				<div class="inner">
+					<h2>Demo</h2>
+					<p><button class="button js-hiraku-btn">Open</button></p>
+				</div>
+			</section>
+
+      <section class="section is-gray">
         <div class="inner is-small">
           <h2><i class="fa fa-check"></i> Feature</h2>
 					<ul>
@@ -88,15 +96,7 @@
 						<li>Accessible for keyboard navigation and screen readers.</li>
 					</ul>
         </div>
-      </section>
-
-      <section class="section is-center is-gradation">
-        <div class="inner">
-          <h2>Learn more</h2>
-          <p>If you want to check all the components included in version 0.1 (beta version), <br>please see the following page.</p>
-          <p><a href="./demos/" class="button is-ghost-white is-medium"><i class="fa fa-arrow-right"></i> Demos</a></p>
-        </div>
-      </section>
+			</section>
 
       <section class="section">
         <div class="inner is-small">
@@ -109,15 +109,16 @@
           <!-- <p>Write the HTML tag of the component you want to use.</p> -->
 
         </div>
-      </section>
+			</section>
 
-      <!-- <section class="section">
-        <div class="inner is-small">
-					<h2><i class="fa fa-book"></i> Document</h2>
+      <section class="section is-center is-gradation">
+					<div class="inner">
+						<h2>Learn more</h2>
+						<p>If you want to know more about hiraku, please go to the below link.</p>
+						<p><a href="./demos/" class="button is-ghost-white is-medium"><i class="fa fa-arrow-right"></i> Demos</a></p>
+					</div>
+				</section>
 
-          <p><a href="#" class="button is-disabled"><i class="fa fa-book"></i> Coming soon ;)</a></p>
-        </div>
-      </section> -->
 
       <section class="section">
         <div class="inner is-small">
@@ -141,29 +142,22 @@
     </div>
 	</footer>
 
-<!--
-  <div class="offcanvas">
-    <div class="offcanvas-overlay offcanvas-close"></div>
-    <div class="offcanvas-content">
-      <button class="button is-close offcanvas-close">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+
+  <div class="js-offcanvas">
       <div class="inner">
         <div class="offcanvas-menu">
-          <a class="is-current" href="./">English</a>
-          <a href="./index_ja.html">日本語</a>
-          <hr>
-          <a href="https://github.com/unys/uny" class="button is-white is-small"><i class="fa fa-github"></i> GitHub</a>
-          <a href="https://github.com/unys/uny/archive/master.zip" class="button is-small"><i class="fa fa-download"></i> Download</a>
-          <hr>
-          <p>version 0.2-beta</p>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
-  <script src="https://unpkg.com/uny@latest/dist/js/uny.min.js"></script>
+        </div>
+    </div>
+  </div>
+
+	<script src="https://unpkg.com/hiraku@2.1.0/js/hiraku.js"></script>
+	<script>
+	new Hiraku('.js-offcanvas', {
+		btn: '.js-hiraku-btn',
+		fixedHeader: '.js-header',
+		direction: 'right'
+	});
+	</script>
 </body>
 </html>
