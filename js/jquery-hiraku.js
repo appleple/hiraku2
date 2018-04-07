@@ -1303,7 +1303,7 @@ var Hiraku = function () {
       var _this5 = this;
 
       if (this.closeBtn && this.closeBtn.addEventListener) {
-        this.closeBtn.addEventListener('click', function (e) {
+        this.closeBtn.addEventListener('click', function () {
           _this5.close();
         });
       }
