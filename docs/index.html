@@ -82,7 +82,8 @@
 				<div class="inner">
 					<h2>Demo</h2>
 					<p>Press to open the offcanvas menu</p>
-					<p><button class="button js-hiraku-btn">Open</button></p>
+					<p><button class="button js-hiraku-btn">Open Right</button></p>
+					<p><button class="button js-hiraku-left-btn">Open Left</button></p>
 				</div>
 			</section>
 
@@ -167,6 +168,27 @@ new Hiraku('.js-hiraku');</code></pre>
 					<a href="#view_on_github">View on Github</a>
         </div>
     </div>
+	</div>
+
+  <div class="js-offcanvas-left">
+      <div class="inner">
+				<div style="text-align:right;padding:10px;">
+					<button class="button is-close" style="color:#333;">
+						<span></span>
+						<span></span>
+						<span></span>
+					</button>
+				</div>
+				<div class="logo is-small is-center" style="color:#333;">MENU</div>
+        <div class="offcanvas-menu">
+					<a href="#download">Download</a>
+					<a href="#demo">Demo</a>
+					<a href="#feature">Feature</a>
+					<a href="#quick_start">Quick Start</a>
+					<a href="#learn_more">Learn More</a>
+					<a href="#view_on_github">View on Github</a>
+        </div>
+    </div>
   </div>
 
 	<script src="https://unpkg.com/hiraku@2.1.0/js/hiraku.js"></script>
@@ -175,6 +197,12 @@ new Hiraku('.js-hiraku');</code></pre>
 		btn: '.js-hiraku-btn',
 		fixedHeader: '.js-header',
 		direction: 'right',
+		width: '30%'
+	});
+	new Hiraku('.js-offcanvas-left', {
+		btn: '.js-hiraku-left-btn',
+		fixedHeader: '.js-header',
+		direction: 'left',
 		width: '30%'
 	});
 	</script>
