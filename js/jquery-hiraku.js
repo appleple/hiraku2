@@ -1047,6 +1047,7 @@ var defaults = {
   btnLabel: 'Menu',
   closeLabel: 'Close',
   fixedHeader: '.js-hiraku-fixed-header',
+  closeBtn: '.js-hiraku-close-btn',
   width: '70%',
   focusableElements: 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]'
 };
@@ -1060,8 +1061,9 @@ var Hiraku = function () {
     this.body = document.querySelector('body');
     this.opt = Object.assign({}, defaults, opt);
     this.side = typeof selector === 'string' ? document.querySelector(selector) : selector;
-    this.btn = typeof opt.btn === 'string' ? document.querySelector(opt.btn) : opt.btn;
-    this.fixed = typeof opt.fixedHeader === 'string' ? document.querySelector(opt.fixedHeader) : opt.fixedHeader;
+    this.btn = typeof this.opt.btn === 'string' ? document.querySelector(this.opt.btn) : this.opt.btn;
+    this.fixed = typeof this.opt.fixedHeader === 'string' ? document.querySelector(this.opt.fixedHeader) : this.opt.fixedHeader;
+    this.closeBtn = typeof this.opt.closeBtn === 'string' ? document.querySelector(this.opt.closeBtn) : this.opt.closeBtn;
     this.windowWidth = 0;
     this.id = (0, _lib.getUniqId)();
     this.opened = false;
@@ -1091,6 +1093,7 @@ var Hiraku = function () {
     this._setOffcanvasWidth(this.opt.width);
     this._setHirakuSideMenu();
     this._setHirakuBtn();
+    this._setHirakuCloseBtn();
     this._setHirakuBody();
     this._resizeHandler();
   }
@@ -1295,9 +1298,20 @@ var Hiraku = function () {
       style.innerHTML = html;
     }
   }, {
+    key: '_setHirakuCloseBtn',
+    value: function _setHirakuCloseBtn() {
+      var _this5 = this;
+
+      if (this.closeBtn && this.closeBtn.addEventListener) {
+        this.closeBtn.addEventListener('click', function (e) {
+          _this5.close();
+        });
+      }
+    }
+  }, {
     key: '_setHirakuSideMenu',
     value: function _setHirakuSideMenu() {
-      var _this5 = this;
+      var _this6 = this;
 
       var side = this.side,
           id = this.id;
@@ -1318,29 +1332,29 @@ var Hiraku = function () {
       side.setAttribute('aria-label', closeLabel);
       this.parentElement = side.nextElementSibling;
       this.parentElement.addEventListener('click', function (e) {
-        _this5._offcanvasClickHandler(e);
+        _this6._offcanvasClickHandler(e);
       });
       this.parentElement.addEventListener('touchstart', function (e) {
-        _this5._offcanvasClickHandler(e);
+        _this6._offcanvasClickHandler(e);
       });
       this.parentElement.addEventListener('keyup', function (e) {
-        _this5._offcanvasClickHandler(e);
+        _this6._offcanvasClickHandler(e);
       });
       [].forEach.call(links, function (link) {
         link.addEventListener('click', function (e) {
           var href = link.getAttribute('href');
           if (href.charAt(0) === '#') {
             e.preventDefault();
-            _this5.close(function () {
-              _this5.opened = true;
+            _this6.close(function () {
+              _this6.opened = true;
               var target = document.querySelector(href);
               var offset = 0;
-              if (_this5.fixed) {
-                offset = -_this5.fixed.offsetHeight;
+              if (_this6.fixed) {
+                offset = -_this6.fixed.offsetHeight;
               }
               (0, _scrollToElement2.default)(target, { offset: offset, duration: 1000 });
               setTimeout(function () {
-                _this5.opened = false;
+                _this6.opened = false;
               }, 1000);
             });
           }
@@ -1350,7 +1364,7 @@ var Hiraku = function () {
   }, {
     key: '_setHirakuBtn',
     value: function _setHirakuBtn() {
-      var _this6 = this;
+      var _this7 = this;
 
       var btn = this.btn,
           id = this.id;
@@ -1362,7 +1376,7 @@ var Hiraku = function () {
       btn.setAttribute('aria-controls', id);
       btn.setAttribute('id', 'hiraku-offcanvas-btn-' + id);
       btn.addEventListener('click', function () {
-        _this6.open();
+        _this7.open();
       });
     }
   }, {
