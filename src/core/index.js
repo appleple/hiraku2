@@ -11,8 +11,8 @@ const defaults = {
   btn: '.js-hiraku-offcanvas-btn',
   btnLabel: 'Menu',
   closeLabel: 'Close',
-	fixedHeader: '.js-hiraku-fixed-header',
-	closeBtn: '.js-hiraku-close-btn',
+  fixedHeader: '.js-hiraku-fixed-header',
+  closeBtn: '.js-hiraku-close-btn',
   width: '70%',
   focusableElements: 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]'
 };
@@ -24,8 +24,8 @@ export default class Hiraku {
     this.opt = Object.assign({}, defaults, opt);
     this.side = typeof selector === 'string' ? document.querySelector(selector) : selector;
     this.btn = typeof this.opt.btn === 'string' ? document.querySelector(this.opt.btn) : this.opt.btn;
-		this.fixed = typeof this.opt.fixedHeader === 'string' ? document.querySelector(this.opt.fixedHeader) : this.opt.fixedHeader;
-		this.closeBtn = typeof this.opt.closeBtn === 'string' ? document.querySelector(this.opt.closeBtn) : this.opt.closeBtn;
+    this.fixed = typeof this.opt.fixedHeader === 'string' ? document.querySelector(this.opt.fixedHeader) : this.opt.fixedHeader;
+    this.closeBtn = typeof this.opt.closeBtn === 'string' ? document.querySelector(this.opt.closeBtn) : this.opt.closeBtn;
     this.windowWidth = 0;
     this.id = getUniqId();
     this.opened = false;
@@ -54,8 +54,8 @@ export default class Hiraku {
     });
     this._setOffcanvasWidth(this.opt.width);
     this._setHirakuSideMenu();
-		this._setHirakuBtn();
-		this._setHirakuCloseBtn();
+    this._setHirakuBtn();
+    this._setHirakuCloseBtn();
     this._setHirakuBody();
     this._resizeHandler();
   }
@@ -242,15 +242,15 @@ export default class Hiraku {
 		}
 		`;
     style.innerHTML = html;
-	}
+  }
 
-	_setHirakuCloseBtn() {
-		if (this.closeBtn && this.closeBtn.addEventListener) {
-			this.closeBtn.addEventListener('click', (e) => {
-				this.close();
-			});
-		}
-	}
+  _setHirakuCloseBtn() {
+    if (this.closeBtn && this.closeBtn.addEventListener) {
+      this.closeBtn.addEventListener('click', () => {
+        this.close();
+      });
+    }
+  }
 
   _setHirakuSideMenu() {
     const { side, id } = this;
