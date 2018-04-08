@@ -2,12 +2,14 @@
 	.js-hiraku-offcanvas-sidebar-right {
 		right: 0;
 		left: auto;
+		min-height: 100vh;
 		transform: translateX(100%);
 	}
-	
+
 	.js-hiraku-offcanvas-sidebar-left {
 		left: 0;
 		right: auto;
+		min-height: 100vh;
 		transform: translateX(-100%);
 	}
 
