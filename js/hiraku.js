@@ -1211,6 +1211,10 @@ var Hiraku = function () {
       if (this.opened === false) {
         return;
       }
+      if (this.side.scrollHeight < this.windowHeight) {
+        e.preventDefault();
+        return;
+      }
       e.preventDefault();
       var posY = this._getTouchPos(e).y;
       var y = posY - this.oldPosY;
@@ -1322,7 +1326,15 @@ var Hiraku = function () {
             e.preventDefault();
             _this6.close(function () {
               _this6.opened = true;
+              if (href === '#') {
+                _this6.opened = false;
+                return;
+              }
               var target = document.querySelector(href);
+              if (!target) {
+                _this6.opened = false;
+                return;
+              }
               var offset = 0;
               if (_this6.fixed) {
                 offset = -_this6.fixed.offsetHeight;
