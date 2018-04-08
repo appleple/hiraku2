@@ -174,11 +174,11 @@ export default class Hiraku {
   _onTouchMove(e) {
     if (this.opened === false) {
       return;
-		}
-		if (this.side.scrollHeight < this.windowHeight) {
-			e.preventDefault();
-			return;
-		}
+    }
+    if (this.side.scrollHeight < this.windowHeight) {
+      e.preventDefault();
+      return;
+    }
     e.preventDefault();
     const posY = this._getTouchPos(e).y;
     const y = posY - this.oldPosY;
@@ -286,16 +286,16 @@ export default class Hiraku {
         if (href.charAt(0) === '#') {
           e.preventDefault();
           this.close(() => {
-						this.opened = true;
-						if (href === '#') {
-							this.opened = false;
-							return;
-						}
-						const target = document.querySelector(href);
-						if (!target) {
-							this.opened = false;
-							return;
-						}
+            this.opened = true;
+            if (href === '#') {
+              this.opened = false;
+              return;
+            }
+            const target = document.querySelector(href);
+            if (!target) {
+              this.opened = false;
+              return;
+            }
             let offset = 0;
             if (this.fixed) {
               offset = -this.fixed.offsetHeight;

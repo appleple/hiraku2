@@ -1,6 +1,6 @@
 {
   "name": "hiraku",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Drawer Menu jQuery Plugin",
   "author": "appleple",
   "url": "https://www.appleple.com",
@@ -50,7 +50,6 @@
     "node-cmd": "^2.0.0",
     "node-sass": "^4.3.0",
     "nodemon": "^1.11.0",
-    "np": "^2.16.0",
     "npm-run-all": "^4.0.2",
     "onchange": "^3.2.1",
     "power-assert": "^1.4.2",
