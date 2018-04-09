@@ -122,9 +122,9 @@ new Hiraku(".offcanvas-right", {
 
 ```js
 var hiraku = new Hiraku(".offcanvas-right", {
-	breakpoint: -1,
-	btn: "#offcanvas-btn-right",
-	closeBtn: '.#offcanvas-btn-close',
+  breakpoint: -1,
+  btn: "#offcanvas-btn-right",
+  closeBtn: '.#offcanvas-btn-close',
   fixedHeader: "#header",
   direction: "right",
   width: '100px' // default 70%
@@ -137,9 +137,9 @@ hiraku.close(); // close offcanvas;
 
 ```js
 var hiraku = new Hiraku(".offcanvas-right", {
-	breakpoint: -1,
-	btn: "#offcanvas-btn-right",
-	closeBtn: '.#offcanvas-btn-close',
+  breakpoint: -1,
+  btn: "#offcanvas-btn-right",
+  closeBtn: '.#offcanvas-btn-close',
   fixedHeader: "#header",
   direction: "right",
   width: '100px' // default 70%
