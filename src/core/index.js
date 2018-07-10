@@ -25,7 +25,7 @@ export default class Hiraku {
     this.side = typeof selector === 'string' ? document.querySelector(selector) : selector;
     this.btn = typeof this.opt.btn === 'string' ? document.querySelector(this.opt.btn) : this.opt.btn;
     this.fixed = typeof this.opt.fixedHeader === 'string' ? document.querySelector(this.opt.fixedHeader) : this.opt.fixedHeader;
-    this.closeBtn = typeof this.opt.closeBtn === 'string' ? document.querySelector(this.opt.closeBtn) : this.opt.closeBtn;
+    this.closeBtns = typeof this.opt.closeBtn === 'string' ? document.querySelectorAll(this.opt.closeBtn) : this.opt.closeBtn;
     this.windowWidth = 0;
     this.id = getUniqId();
     this.opened = false;
@@ -55,7 +55,7 @@ export default class Hiraku {
     this._setOffcanvasWidth(this.opt.width);
     this._setHirakuSideMenu();
     this._setHirakuBtn();
-    this._setHirakuCloseBtn();
+    this._setHirakuCloseBtns();
     this._setHirakuBody();
     this._resizeHandler();
   }
@@ -248,10 +248,13 @@ export default class Hiraku {
     style.innerHTML = html;
   }
 
-  _setHirakuCloseBtn() {
-    if (this.closeBtn && this.closeBtn.addEventListener) {
-      this.closeBtn.addEventListener('click', () => {
-        this.close();
+  _setHirakuCloseBtns() {
+    const { closeBtns } = this;
+    if (closeBtns) {
+      [].forEach.call(closeBtns, (closeBtn) => {
+        closeBtn.addEventListener('click', () => {
+          this.close();
+        });
       });
     }
   }

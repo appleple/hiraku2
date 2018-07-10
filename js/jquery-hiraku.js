@@ -5,7 +5,7 @@
  * hiraku:
  *   license: MIT (http://opensource.org/licenses/MIT)
  *   author: appleple
- *   version: 2.1.2
+ *   version: 2.1.3
  *
  * component-clone:
  *   maintainers: jongleberry <jonathanrichardong@gmail.com>
@@ -1063,7 +1063,7 @@ var Hiraku = function () {
     this.side = typeof selector === 'string' ? document.querySelector(selector) : selector;
     this.btn = typeof this.opt.btn === 'string' ? document.querySelector(this.opt.btn) : this.opt.btn;
     this.fixed = typeof this.opt.fixedHeader === 'string' ? document.querySelector(this.opt.fixedHeader) : this.opt.fixedHeader;
-    this.closeBtn = typeof this.opt.closeBtn === 'string' ? document.querySelector(this.opt.closeBtn) : this.opt.closeBtn;
+    this.closeBtns = typeof this.opt.closeBtn === 'string' ? document.querySelectorAll(this.opt.closeBtn) : this.opt.closeBtn;
     this.windowWidth = 0;
     this.id = (0, _lib.getUniqId)();
     this.opened = false;
@@ -1093,7 +1093,7 @@ var Hiraku = function () {
     this._setOffcanvasWidth(this.opt.width);
     this._setHirakuSideMenu();
     this._setHirakuBtn();
-    this._setHirakuCloseBtn();
+    this._setHirakuCloseBtns();
     this._setHirakuBody();
     this._resizeHandler();
   }
@@ -1302,13 +1302,17 @@ var Hiraku = function () {
       style.innerHTML = html;
     }
   }, {
-    key: '_setHirakuCloseBtn',
-    value: function _setHirakuCloseBtn() {
+    key: '_setHirakuCloseBtns',
+    value: function _setHirakuCloseBtns() {
       var _this5 = this;
 
-      if (this.closeBtn && this.closeBtn.addEventListener) {
-        this.closeBtn.addEventListener('click', function () {
-          _this5.close();
+      var closeBtns = this.closeBtns;
+
+      if (closeBtns) {
+        [].forEach.call(closeBtns, function (closeBtn) {
+          closeBtn.addEventListener('click', function () {
+            _this5.close();
+          });
         });
       }
     }
