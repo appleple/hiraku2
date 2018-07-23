@@ -5,7 +5,7 @@
  * hiraku:
  *   license: MIT (http://opensource.org/licenses/MIT)
  *   author: appleple
- *   version: 2.1.3
+ *   version: 2.1.4
  *
  * component-clone:
  *   maintainers: jongleberry <jonathanrichardong@gmail.com>
@@ -1374,9 +1374,14 @@ var Hiraku = function () {
     key: '_setHirakuBody',
     value: function _setHirakuBody() {
       var body = this.body;
+      var side = this.side;
       (0, _lib.addClass)(body, 'js-hiraku-offcanvas-body');
       if (this.isIE) {
         (0, _lib.addClass)(body, 'js-hiraku-offcanvas-body-ie');
+        side.style.transition = 'none';
+        setTimeout(function () {
+          side.style.transition = '';
+        }, 1);
       }
     }
   }, {

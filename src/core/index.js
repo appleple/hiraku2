@@ -327,10 +327,15 @@ export default class Hiraku {
   }
 
   _setHirakuBody() {
-    const body = this.body;
+		const body = this.body;
+		const side = this.side;
     addClass(body, 'js-hiraku-offcanvas-body');
     if (this.isIE) {
-      addClass(body, 'js-hiraku-offcanvas-body-ie');
+			addClass(body, 'js-hiraku-offcanvas-body-ie');
+			side.style.transition = 'none';
+			setTimeout(() => {
+				side.style.transition = '';
+			}, 1);
     }
   }
 
