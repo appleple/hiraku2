@@ -1,9 +1,11 @@
 import scrollToElement from 'scroll-to-element';
 import debounce from 'debounce';
 import 'es6-object-assign/auto';
+import 'raf/polyfill';
 import 'custom-event-polyfill';
 import { getUniqId, getWindowWidth, getWindowHeight, hasClass,
-	addClass, removeClass, getScrollTop, after, isIE, triggerEvent, append } from '../lib';
+  addClass, removeClass, getScrollTop,
+  after, isIE, triggerEvent, append, isNativeAndroid } from '../lib';
 
 const defaults = {
   direction: 'right',
@@ -16,6 +18,8 @@ const defaults = {
   width: '70%',
   focusableElements: 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]'
 };
+
+const isAndroid = isNativeAndroid();
 
 export default class Hiraku {
 
@@ -103,14 +107,22 @@ export default class Hiraku {
     addClass(btn, 'js-hiraku-offcanvas-btn-active');
     if (direction === 'right') {
       addClass(body, 'js-hiraku-offcanvas-body-right');
+      if (isAndroid) {
+        addClass(body, 'js-hiraku-offcanvas-body-right-android');
+      }
     } else {
       addClass(body, 'js-hiraku-offcanvas-body-left');
+      if (isAndroid) {
+        addClass(body, 'js-hiraku-offcanvas-body-left-android');
+      }
     }
+    
     if (fixed) {
       if (this.isIE) {
         fixed.style.transform = `translateX(${side.offsetWidth}px)`;
       } else {
         fixed.style.transform = `translateY(${getScrollTop()}px)`;
+        fixed.style.webkitTransform = `translateY(${getScrollTop()}px)`;
       }
     }
     this.scrollAmount = 0;
@@ -121,11 +133,14 @@ export default class Hiraku {
         side.style.transform = 'translateX(0px)';
       } else {
         side.style.transform = `translateX(100%) translateY(${getScrollTop()}px)`;
+        side.style.webkitTransform = `translateX(100%) translateY(${getScrollTop()}px)`;
       }
     } else if (this.isIE) {
       side.style.transform = 'translateX(0px)';
+      side.style.webkitTransform = 'translateX(0px)';
     } else {
       side.style.transform = `translateX(-100%) translateY(${getScrollTop()}px)`;
+      side.style.webkitTransform = `translateX(-100%) translateY(${getScrollTop()}px)`;
     }
     side.style.marginTop = '0px';
   }
@@ -139,6 +154,7 @@ export default class Hiraku {
     const onTransitionEnd = (e) => {
       if (fixed) {
         fixed.style.transform = 'translateY(0px)';
+        fixed.style.webkitTransform = 'translateY(0px)';
       }
       if (e.propertyName !== 'transform') {
         return;
@@ -147,6 +163,7 @@ export default class Hiraku {
       body.removeEventListener('transitionend', onTransitionEnd);
       btn.setAttribute('aria-expanded', false);
       side.style.transform = '';
+      side.style.webkitTransform = '';
       side.setAttribute('aria-hidden', true);
       removeClass(btn, 'js-hiraku-offcanvas-btn-active');
       this.opened = false;
@@ -155,8 +172,14 @@ export default class Hiraku {
     };
     if (direction === 'right') {
       removeClass(body, 'js-hiraku-offcanvas-body-right');
+      if (isAndroid) {
+        removeClass(body, 'js-hiraku-offcanvas-body-right-android');
+      }
     } else {
-      removeClass(body, 'js-hiraku-offcanvas-body-left');
+      removeClass(body, 'js-hiraku-offcanvas-body-left-android');
+      if (isAndroid) {
+        removeClass(body, 'js-hiraku-offcanvas-body-left-android');
+      }
     }
     body.addEventListener('webkitTransitionEnd', onTransitionEnd);
     body.addEventListener('transitionend', onTransitionEnd);
@@ -175,11 +198,10 @@ export default class Hiraku {
     if (this.opened === false) {
       return;
     }
+    e.preventDefault();
     if (this.side.scrollHeight < this.windowHeight) {
-      e.preventDefault();
       return;
     }
-    e.preventDefault();
     const posY = this._getTouchPos(e).y;
     const y = posY - this.oldPosY;
     const limitHeight = this.side.scrollHeight - this.windowHeight;
@@ -239,11 +261,24 @@ export default class Hiraku {
 			width: ${width} !important;
 		}
 		.js-hiraku-offcanvas-body-right {
-			transform: translateX(-${width}) !important;
+      transform: translateX(-${width}) !important;
+      -webkit-transform: translateX(-${width}) !important;
 		}
 		.js-hiraku-offcanvas-body-left {
-			transform: translateX(${width}) !important;
-		}
+      transform: translateX(${width}) !important;
+      -webkit-transform: translateX(${width}) !important;
+    }
+    .js-hiraku-offcanvas-body-android-active .js-hiraku-offcanvas-sidebar{
+      -webkit-transition: all .3s;
+    }
+    .js-hiraku-offcanvas-body-right-android .js-hiraku-offcanvas-sidebar-right {
+        right: ${width};
+        z-index: 99999;
+    }
+    .js-hiraku-offcanvas-body-left-android .js-hiraku-offcanvas-sidebar-left {
+      left: ${width};
+      z-index: 99999;
+    }
 		`;
     style.innerHTML = html;
   }
@@ -333,8 +368,10 @@ export default class Hiraku {
     if (this.isIE) {
       addClass(body, 'js-hiraku-offcanvas-body-ie');
       side.style.transition = 'none';
+      side.style.webkitTransition = 'none';
       setTimeout(() => {
         side.style.transition = '';
+        side.style.webkitTransition = '';
       }, 1);
     }
   }
@@ -388,8 +425,14 @@ export default class Hiraku {
     }
     if (breakpoint === -1 || breakpoint >= windowWidth) {
       addClass(body, 'js-hiraku-offcanvas-body-active');
+      if (isAndroid) {
+        addClass(body, 'js-hiraku-offcanvas-body-android-active');
+      }
     } else {
       removeClass(body, 'js-hiraku-offcanvas-body-active');
+      if (isAndroid) {
+        removeClass(body, 'js-hiraku-offcanvas-body-android-active');
+      }
     }
     this.close();
   }

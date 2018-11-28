@@ -12,7 +12,7 @@ export const getWindowWidth = () => {
 }
 
 export const getWindowHeight = () => {
- return window.innerHeight || document.documentElement.clientHeight || 0;
+  return window.innerHeight || document.documentElement.clientHeight || 0;
 }
 
 export const hasClass = (el, className) => {
@@ -23,7 +23,7 @@ export const hasClass = (el, className) => {
   }
 }
 
-export const addClass = (element,className) => {
+export const addClass = (element, className) => {
   if (element.classList) {
     element.classList.add(className);
   } else {
@@ -31,7 +31,7 @@ export const addClass = (element,className) => {
   }
 }
 
-export const removeClass = (element,className) => {
+export const removeClass = (element, className) => {
   if (element.classList) {
     element.classList.remove(className);
   } else {
@@ -54,7 +54,7 @@ export const after = (el, html) => {
 
 export const isIE = () => {
   const userAgent = window.navigator.userAgent.toLowerCase();
-  if( userAgent.match(/(msie|MSIE)/) || userAgent.match(/(T|t)rident/) ) {
+  if (userAgent.match(/(msie|MSIE)/) || userAgent.match(/(T|t)rident/)) {
     return true;
   }
   return false;
@@ -63,7 +63,7 @@ export const isIE = () => {
 export const triggerEvent = (el, eventName, options) => {
   let event;
   if (window.CustomEvent) {
-    event = new CustomEvent(eventName, {cancelable:true});
+    event = new CustomEvent(eventName, { cancelable: true });
   } else {
     event = document.createEvent('CustomEvent');
     event.initCustomEvent(eventName, false, false, options);
@@ -71,10 +71,15 @@ export const triggerEvent = (el, eventName, options) => {
   el.dispatchEvent(event);
 }
 
-export const append = (element,　string) => {
-	const div = document.createElement('div');
-	div.innerHTML = string;
-	while (div.children.length > 0) {
-		element.appendChild(div.children[0]);
-	}
+export const append = (element, string) => {
+  const div = document.createElement('div');
+  div.innerHTML = string;
+  while (div.children.length > 0) {
+    element.appendChild(div.children[0]);
+  }
+}
+
+export const isNativeAndroid = () => {
+  const nua = navigator.userAgent;
+  return ((nua.indexOf('Mozilla/5.0') > -1 && nua.indexOf('Android ') > -1 && nua.indexOf('AppleWebKit') > -1) && !(nua.indexOf('Chrome') > -1));
 }

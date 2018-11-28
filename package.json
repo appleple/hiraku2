@@ -5,6 +5,7 @@
   "author": "appleple",
   "url": "https://www.appleple.com",
   "main": "lib/index.js",
+  "type": "./index.d.ts",
   "scripts": {
     "test": "npm run lint",
     "lint": "eslint ./src/core/index.js --fix",
@@ -21,6 +22,7 @@
     "watch:js": "onchange \"src/\" -- npm run build:js",
     "watch:sass": "onchange \"scss\" -- npm run build:sass",
     "sync": "browser-sync start --server './' --files './js/*.js' './css/*.css' --startPath '/examples/right-side'",
+    "weinre": "weinre",
     "start": "npm-run-all -p watch:js watch:sass sync",
     "deploy": "np --no-cleanup"
   },
@@ -54,7 +56,8 @@
     "onchange": "^3.2.1",
     "power-assert": "^1.4.2",
     "uglify-js": "^2.8.22",
-    "watchify": "^3.9.0"
+    "watchify": "^3.9.0",
+    "weinre": "^2.0.0-pre-I0Z7U9OV"
   },
   "dependencies": {
     "custom-event-polyfill": "^0.3.0",
@@ -62,6 +65,7 @@
     "es6-object-assign": "^1.1.0",
     "es6-promise-polyfill": "^1.2.0",
     "np": "^2.20.1",
+    "raf": "^3.4.1",
     "scroll-to-element": "^2.0.0"
   }
 }

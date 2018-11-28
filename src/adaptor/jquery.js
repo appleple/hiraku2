@@ -1,10 +1,8 @@
-'use strict';
-
 const Hiraku = require('../index');
 
 const applyJQuery = (jQuery) => {
   jQuery.fn.hiraku = function(settings) {
-    if (typeof settings === 'strings'){
+    if (typeof settings === 'string'){
     } else {
       new Hiraku(this.get(0), settings);
     }
