@@ -5,7 +5,7 @@
  * hiraku:
  *   license: MIT (http://opensource.org/licenses/MIT)
  *   author: appleple
- *   version: 2.1.6
+ *   version: 2.1.7
  *
  * component-clone:
  *   maintainers: jongleberry <jonathanrichardong@gmail.com>
@@ -1325,14 +1325,13 @@ var Hiraku = function () {
         _this6._offcanvasClickHandler(e);
       });
       [].forEach.call(links, function (link) {
-        if ((0, _lib.hasClass)(link, _this6.opt.disableBtn.slice(1))) {
-          return;
-        }
         link.addEventListener('click', function (e) {
           var href = link.getAttribute('href');
           if (href.charAt(0) === '#') {
             e.preventDefault();
-
+            if ((0, _lib.hasClass)(link, _this6.opt.disableBtn.slice(1))) {
+              return;
+            }
             _this6.close(function () {
               _this6.opened = true;
               if (href === '#') {
@@ -1491,10 +1490,9 @@ var getWindowHeight = exports.getWindowHeight = function getWindowHeight() {
 
 var hasClass = exports.hasClass = function hasClass(el, className) {
   if (el.classList) {
-    el.classList.contains(className);
-  } else {
-    new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
+    return el.classList.contains(className);
   }
+  return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
 };
 
 var addClass = exports.addClass = function addClass(element, className) {

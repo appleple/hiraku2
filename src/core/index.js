@@ -285,14 +285,13 @@ export default class Hiraku {
       this._offcanvasClickHandler(e);
     });
     [].forEach.call(links, (link) => {
-      if (hasClass(link, this.opt.disableBtn.slice(1))) {
-        return;
-      }
       link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');
         if (href.charAt(0) === '#') {
           e.preventDefault();
-
+          if (hasClass(link, this.opt.disableBtn.slice(1))) {
+            return;
+          }
           this.close(() => {
             this.opened = true;
             if (href === '#') {
