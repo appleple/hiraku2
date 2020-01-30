@@ -13,6 +13,7 @@ const defaults = {
   closeLabel: 'Close',
   fixedHeader: '.js-hiraku-fixed-header',
   closeBtn: '.js-hiraku-close-btn',
+  disableBtn: '.js-hiraku-collapse',
   width: '70%',
   focusableElements: 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]'
 };
@@ -284,10 +285,14 @@ export default class Hiraku {
       this._offcanvasClickHandler(e);
     });
     [].forEach.call(links, (link) => {
+      if (hasClass(link, this.opt.disableBtn.slice(1))) {
+        return;
+      }
       link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');
         if (href.charAt(0) === '#') {
           e.preventDefault();
+
           this.close(() => {
             this.opened = true;
             if (href === '#') {

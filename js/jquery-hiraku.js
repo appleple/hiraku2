@@ -5,7 +5,7 @@
  * hiraku:
  *   license: MIT (http://opensource.org/licenses/MIT)
  *   author: appleple
- *   version: 2.1.4
+ *   version: 2.1.6
  *
  * component-clone:
  *   maintainers: jongleberry <jonathanrichardong@gmail.com>
@@ -1048,6 +1048,7 @@ var defaults = {
   closeLabel: 'Close',
   fixedHeader: '.js-hiraku-fixed-header',
   closeBtn: '.js-hiraku-close-btn',
+  disableBtn: '.js-hiraku-collapse',
   width: '70%',
   focusableElements: 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]'
 };
@@ -1349,10 +1350,14 @@ var Hiraku = function () {
         _this6._offcanvasClickHandler(e);
       });
       [].forEach.call(links, function (link) {
+        if ((0, _lib.hasClass)(link, _this6.opt.disableBtn.slice(1))) {
+          return;
+        }
         link.addEventListener('click', function (e) {
           var href = link.getAttribute('href');
           if (href.charAt(0) === '#') {
             e.preventDefault();
+
             _this6.close(function () {
               _this6.opened = true;
               if (href === '#') {
